@@ -1,0 +1,25 @@
+<div class="span5">
+	<span style="padding-right: 20px;" ng-repeat="pendingtransaction in pendingtransactions">
+		{{pendingtransaction.narrative}} - {{pendingtransaction.amount | number:2}} DR
+	</span>
+	<table class="table table-condensed">
+		<tr ng-repeat="transaction in transactions" ng-animate="'fade'">
+			<td style="text-align: right">{{transaction.transaction.transDate | date:"d MMM"}}</td>
+			<td>
+			<b>{{transaction.transaction.narrative}}</b> 
+			<small><em class="muted">{{transaction.transaction.subNarrative}}</em></small>
+			<br/>
+			<div>
+ 			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]">no comment</div>
+			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html-unsafe="parseHashtags(transaction.transaction.comment)"></div>
+			<div ng-show="editingTransaction[$index]"><form novalidate>
+				<input type="text" ng-model="transaction.transaction.comment"/>
+				<button ng-click="updateTransaction($index)">done</button>
+				</form></div>
+			</div>
+			</td>
+			<td style="text-align: right">{{transaction.transaction.amount | number:2}}</td>
+			<td><small>{{transaction.transaction.isDR ? "DR" : ""}}</small></td>
+		</tr>
+	</table>
+</div>

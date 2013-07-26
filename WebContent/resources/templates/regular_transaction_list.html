@@ -1,0 +1,28 @@
+<div class="span3">
+	<span ng-click="refreshFromAIB()">Websocket stuff:</span> {{ws}}
+	<table class="table table-condensed">
+		<tr ng-repeat="rtransaction in regularTransactions | filter:beforeNextPayDay">
+			<td>{{rtransaction.description}} {{dueDate(rtransaction)}}</td>
+			<td style="text-align: right">{{rtransaction.amount | number:2}}</td>
+		</tr>
+		<tr>
+			<td><strong>Remaining:</strong></td>
+			<td style="text-align: right"><strong>{{remainingBalance | number:2 }}</strong></td>
+		</tr>
+	</table>
+	<p>
+		<div>
+		<div ng-repeat="rtransaction in regularTransactions" >
+			<div ng-show="!editingRT[$index]">
+				{{rtransaction.description}} <small>(<span ng-click="editRT($index)">{{rtransaction.narrative}}</span>)</small> {{dueDate(rtransaction)}}
+				&mdash; {{rtransaction.amount | number:2}}
+			</div>
+			<div ng-show="editingRT[$index]">
+				<form novalidate>
+				<input type="text" ng-model="rtransaction.description"/>
+				<button ng-click="updateRT($index)">done</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
