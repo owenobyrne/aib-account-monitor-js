@@ -34,11 +34,18 @@
     	font-size: 20px;
     }
     
+    .line {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
+    
 	</style>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
 	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
+	<script src="http://d3js.org/d3.v3.js" charset="UTF-8"></script>
 	<script src="resources/js/libs/later.js"></script>
 	<script src="resources/js/libs/moment.js"></script>
 	<script src="resources/js/libs/jquery.atmosphere.js"></script>
@@ -67,5 +74,8 @@
 		<div ui-view="accounts" ng-animate="'fade'" class="span8"></div>
 		<div ui-view="regulartransactions" ng-animate="'fade'" class="span3"></div>
 	</div>
+	
+
+
 </body>
 </html>

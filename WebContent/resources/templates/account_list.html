@@ -6,6 +6,7 @@
         <li ng-repeat="account in accounts" ng-animate="'fade'"
             ng-class="{ active: $state.includes('accounts.transactions') && $stateParams.accountId == account.id }">
           <a href="#/accounts/{{account.name}}/transactions"><b>{{account.name}}</b> {{account.balance | number:2}}{{account.balance < 0 ? " DR" : ""}}</a>
+          <sparkline data="sparklines[account.name]"></sparkline>
         </li>
       </ul>
     </div>

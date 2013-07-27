@@ -2,11 +2,16 @@ var serviceEndpoint = "http://payb.in/";
 
 angular.module('onlinebankingServices', ['ngResource'])
     .factory('Accounts', function($resource){
-    	return $resource(serviceEndpoint + 'api/accounts/:accountName/:transactionType', {}, {
+    	return $resource(serviceEndpoint + 'api/accounts/:sparkline:accountName/:transactionType', {}, {
     		all: {
     			method:'GET', 
     			params: {accountName:""}, 
     			isArray:true
+    		},
+    		sparklines: {
+    			method:'GET', 
+    			params: {sparkline:"sparklines"}, 
+    			isArray:false
     		},
     		details: {
     			method:'GET', 
