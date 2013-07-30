@@ -3,34 +3,31 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		
 		$stateProvider
-			.state('accounts', {
+			.state('application', {
 				// this is an abstract state. It runs, then falls through to the next state that matches.
 				url: "", // root route i.e. /
 				abstract: true,
 				views: {
-					"accounts@": {
+					// the @ signifies that this view is in the rootview rather than a 
+					// child view of accounts. (after the @ is the state name)
+					
+					"topview@": {
 						templateUrl: "/resources/templates/account_list.html",
 						controller: AccountListCtrl						
 					},
-					"regulartransactions@": { 
-						// the @ signifies that this view is in the rootview rather than a 
-						// child view of accounts. (after the @ is the state name)
+					"mainview@": {
+						template: 'Something here'	
+					},
+					"rightview@": { 
 						templateUrl: "/resources/templates/regular_transaction_list.html",
 						controller: RegularTransactionListCtrl
 					}
 				}
 			})
-			.state('accounts.list', { 
-				// because the parent state (accounts) is abstract, and this state is the 
-				// empty url, it will also be run when you call /
-				url: '', 
-				template: 'Something here',
-			})
-			
-			.state("accounts.transactions", {
+			.state("application.transactions", {
 				url: "/accounts/:accountName/transactions",
 				views: {
-					"": {
+					"mainview@": {
 						templateUrl: "/resources/templates/transaction_list.html",
         				controller: TransactionListCtrl	
 					}
@@ -38,13 +35,14 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 			}); 
 	}]).
 	config(['$httpProvider', function($httpProvider) {
+		// set up the base HTTP provider to do CORS
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 	]).
 	directive('sparkline', function( /* dependencies */) {
 			var margin = {top: 3, right: 3, bottom: 3, left: 3},
-			    width = 150 - margin.left - margin.right,
+			    width = 180 - margin.left - margin.right,
 			    height = 20 - margin.top - margin.bottom;
 
 			var x = d3.scale.linear()
