@@ -16,7 +16,7 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, Acco
 	
 	var request = new $.atmosphere.AtmosphereRequest();
     request.transport = "websocket";
-    request.url = "http://payb.in/websockets/aibam/transactions";
+    request.url = "http://payb.in/aibaccountmonitor/websockets/aibam/transactions";
     request.contentType = "application/json";
     request.fallbackTransport = "polling";
     request.trackMessageLength = true;

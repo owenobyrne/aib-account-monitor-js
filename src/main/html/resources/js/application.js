@@ -6,7 +6,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 			.state('application', {
 				// this is an abstract state. It runs, then falls through to the next state that matches.
 				url: "", // root route i.e. /
-				abstract: true,
+				//abstract: true,
 				views: {
 					// the @ signifies that this view is in the rootview rather than a 
 					// child view of accounts. (after the @ is the state name)

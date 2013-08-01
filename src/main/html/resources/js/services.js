@@ -1,4 +1,4 @@
-var serviceEndpoint = "http://payb.in/";
+var serviceEndpoint = "http://payb.in/aibaccountmonitor/";
 
 angular.module('onlinebankingServices', ['ngResource'])
     .factory('Accounts', function($resource){
