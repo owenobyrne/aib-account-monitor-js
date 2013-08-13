@@ -7,7 +7,7 @@
 			<sparkline data="sparklines[account.name]"></sparkline>
 		</div>
 		<div ng-animate="'fade'" class="balanceAmount" style="background-color: rgba(255, 255, 255,0.9); position: relative;  font-family: 'roboto black'; font-size: 18px; padding-left: 5px; line-height: 30px; height: 30px; margin-top: -30px; text-align: left;" ng-show="show1">
-			{{account.balance < 0 ? "(" : ""}}{{account.balance | number:2}} <span style="font-size: 9pt; font-family: 'roboto light'">EUR</span>{{account.balance < 0 ? ")" : ""}}
+			{{account.balance < 0 ? "(" : ""}}{{account.balance | number:2}} <span style="font-size: 8pt; font-family: roboto; font-weight: 300; ">EUR</span>{{account.balance < 0 ? ")" : ""}}
 		</div>
 		<div  style="font-family: 'roboto'; font-size: 7pt; color: #999999;">
 			<b>{{account.bank}} {{account.name}}</b><br/>
