@@ -3,6 +3,8 @@ function AccountListCtrl($scope, Accounts) {
 	$scope.sparklines = Accounts.sparklines();
 	
 	$scope.formatIBAN = function(iban) {
+		if (!iban) { return ""; }
+		
 		return iban.substring(0, 4) + " " + 
 		iban.substring(4, 8) + " " + 
 		iban.substring(8, 12) + " " + 

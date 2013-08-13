@@ -1,4 +1,4 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.state']).
+angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.state', 'ngDragDrop']).
 	config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		
@@ -12,14 +12,14 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 					// child view of accounts. (after the @ is the state name)
 					
 					"topview@": {
-						templateUrl: "/resources/templates/account_list.html",
+						templateUrl: "/templates/account_list.html",
 						controller: AccountListCtrl						
 					},
 					"mainview@": {
 						template: 'Something here'	
 					},
 					"rightview@": { 
-						templateUrl: "/resources/templates/regular_transaction_list.html",
+						templateUrl: "/templates/regular_transaction_list.html",
 						controller: RegularTransactionListCtrl
 					}
 				}
@@ -28,7 +28,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 				url: "/accounts/:accountName/transactions",
 				views: {
 					"mainview@": {
-						templateUrl: "/resources/templates/transaction_list.html",
+						templateUrl: "/templates/transaction_list.html",
         				controller: TransactionListCtrl	
 					}
 				}
@@ -66,7 +66,8 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 			return {
 				restrict : 'E', // the directive can be invoked only by using <my-directive> tag in the template
 				scope : { // attributes bound to the scope of the directive
-					data : '='
+					data : '=',
+					accountbalance : "="
 				},
 						link : function(scope, element, attrs) {
 							var svg = d3
@@ -90,7 +91,8 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 								svg.append("path")
 									.datum(data)
 									.attr("class", "line")
-									.attr("d", line);
+									.attr("d", line)
+									.attr("stroke", function(d, i) { console.log(scope.accountbalance); return scope.accountbalance > 0 ? "steelblue" : "red"; });
 							});
 
 						}
