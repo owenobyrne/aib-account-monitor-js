@@ -6,14 +6,14 @@
 		<tr ng-repeat="transaction in transactions" ng-animate="'fade'">
 			<td style="text-align: right">{{transaction.transaction.transDate | date:"d MMM"}}</td>
 			<td>
-			<b>{{transaction.transaction.narrative}}</b> 
-			<small><em class="muted">{{transaction.transaction.subNarrative}}</em></small>
+			<b style="font-size: 16px;">{{transaction.transaction.narrative}}</b> 
+			<small><em class="muted" style="font-weight: 300;">{{transaction.transaction.subNarrative}}</em></small>
 			<br/>
 			<div>
- 			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]">no comment</div>
-			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html-unsafe="parseHashtags(transaction.transaction.comment)"></div>
+ 			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]"  style="font-weight: 300;">no comment</div>
+			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html-unsafe="parseHashtags(transaction.transaction.comment)"  style="font-weight: 300;"></div>
 			<div ng-show="editingTransaction[$index]"><form novalidate>
-				<input type="text" ng-model="transaction.transaction.comment"/>
+				<input type="text" ng-focus="editingTransaction[$index]" ng-model="transaction.transaction.comment"/>
 				<button ng-click="updateTransaction($index)">done</button>
 				</form></div>
 			</div>

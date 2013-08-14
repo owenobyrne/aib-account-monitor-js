@@ -1,5 +1,5 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.state', 'ngDragDrop']).
-	config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
+angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.state', 'ngDragDrop'])
+	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		
 		$stateProvider
@@ -33,14 +33,16 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 					}
 				}
 			}); 
-	}]).
-	config(['$httpProvider', function($httpProvider) {
+	}])
+	.config(['$httpProvider', function($httpProvider) {
 		// set up the base HTTP provider to do CORS
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
-	]).
-	directive('sparkline', function( /* dependencies */) {
+	])
+	
+	
+	.directive('sparkline', function( /* dependencies */) {
 			var margin = {top: 3, right: 3, bottom: 3, left: 3},
 			    width = 180 - margin.left - margin.right,
 			    height = 20 - margin.top - margin.bottom;
@@ -97,5 +99,73 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 
 						}
 			};
+		})
+		.directive('ngFocus',function($parse,$timeout){
+		  return function(scope,element,attrs){
+		    var ngFocusGet = $parse(attrs.ngFocus);
+		    var ngFocusSet = ngFocusGet.assign;
+		    if (!ngFocusSet) {
+		      throw Error("Non assignable expression");
+		    }
+		    
+		    var digesting = false;
+		    
+		    var abortFocusing = false;
+		    var unwatch = scope.$watch(attrs.ngFocus,function(newVal){
+		      if(newVal){
+		        $timeout(function(){
+		          element[0].focus();  
+		        },0)
+		      }
+		      else {
+		        $timeout(function(){
+		          element[0].blur();
+		        },0);
+		      }
+		    });
+		    
+		    
+		    element.bind("blur",function(){
+		      
+		      if(abortFocusing) return;
+		      
+		      $timeout(function(){
+		        ngFocusSet(scope,false);
+		      },0);
+		      
+		    });
+		    
+		    
+		    var timerStarted = false;
+		    var focusCount = 0;
+		    
+		    function startTimer(){
+		      $timeout(function(){
+		        timerStarted = false;
+		        if(focusCount > 3){
+		          unwatch();
+		          abortFocusing = true;
+		          throw new Error("Aborting : ngFocus cannot be assigned to the same variable with multiple elements");
+		        }
+		      },200);
+		    }
+		    
+		    element.bind("focus",function(){
+		      
+		      if(abortFocusing) return;
+		      
+		      if(!timerStarted){
+		        timerStarted = true;
+		        focusCount = 0;
+		        startTimer();
+		      }
+		      focusCount++;
+		      
+		      $timeout(function(){
+		        ngFocusSet(scope,true);
+		      },0);
+		      
+		    });
+		  };
 		});
 
