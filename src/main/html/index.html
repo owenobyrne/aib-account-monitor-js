@@ -63,28 +63,28 @@ body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
 <script
-	src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
-<script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
 <script src="http://d3js.org/d3.v3.js" charset="UTF-8"></script>
 <script src="js/libs/later.js"></script>
 <script src="js/libs/moment.js"></script>
+<script src="js/libs/base64.js"></script>
 <script src="js/libs/jquery.atmosphere.js"></script>
+<script	src="js/modules/angular-localstorage.js"></script>
+<script	src="js/modules/angular-ui-router-0.0.2.js"></script>
 <script src="js/modules/angular-atmosphere.js"></script>
 <script src="js/modules/angular-dragdrop-1.0.3.js"></script>
+<script src="js/modules/angular-google-plus-signin.js"></script>
 <script src="js/services.js"></script>
 <script src="js/application.js"></script>
+<script src="js/controllers/header_controller.js"></script>
 <script src="js/controllers/account_list_controller.js"></script>
 <script src="js/controllers/transaction_list_controller.js"></script>
 <script src="js/controllers/regular_transaction_list_controller.js"></script>
+<script src="js/controllers/login_controller.js"></script>
 </head>
 <body>
-	<div>
-		<div ui-view="topview"></div>
-	</div>
-	<div style="clear: both;">
-		<div ui-view="mainview" style="width: 60%; float: left;"></div>
-		<div ui-view="rightview" style="width: 40%; margin-left: 60%;"></div>
-	</div>
+	<div ui-view="applicationview"></div>
 </body>
+
+
 </html>

@@ -1,8 +1,8 @@
-var serviceEndpoint = "http://payb.in/aibaccountmonitor/";
+var serviceEndpoint = "http://payb.in/aibaccountmonitor/api";
 
 angular.module('onlinebankingServices', ['ngResource'])
     .factory('Accounts', function($resource){
-    	return $resource(serviceEndpoint + 'api/accounts/:sparkline:accountName/:transactionType', {}, {
+    	return $resource(serviceEndpoint + '/accounts/:sparkline:accountName/:transactionType', {}, {
     		all: {
     			method:'GET', 
     			params: {accountName:""}, 
@@ -32,7 +32,7 @@ angular.module('onlinebankingServices', ['ngResource'])
     	});
     })
     .factory('RegularTransactions', function($resource){
-		return $resource(serviceEndpoint + 'api/regulartransactions/:regularTransactionId', {}, {
+		return $resource(serviceEndpoint + '/regulartransactions/:regularTransactionId', {}, {
 			all: {
 				method:'GET', 
 				params: {regularTransactionId:""}, 
@@ -45,7 +45,7 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('Transactions', function($resource){
-		return $resource(serviceEndpoint + 'api/transactions/:transactionId', {}, {
+		return $resource(serviceEndpoint + '/transactions/:transactionId', {}, {
 			update: {
 				method:'PUT',
 				params: {transactionId:"@transactionId"}
@@ -53,7 +53,7 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('Reports', function($resource){
-		return $resource(serviceEndpoint + 'api/reports/:reportName', {}, {
+		return $resource(serviceEndpoint + '/reports/:reportName', {}, {
 			run: {
 				method:'GET', 
 				isArray:true
@@ -61,10 +61,18 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('BankData', function($resource){
-		return $resource(serviceEndpoint + 'api/bankdata/:action', {}, {
+		return $resource(serviceEndpoint + '/bankdata/:action', {}, {
 			run: {
 				method:'GET', 
 				isArray:true
+			}
+		});
+    })
+    .factory('Login', function($resource){
+		return $resource(serviceEndpoint + '/login', {}, {
+			login: {
+				method:'POST', 
+				isArray:false
 			}
 		});
     });

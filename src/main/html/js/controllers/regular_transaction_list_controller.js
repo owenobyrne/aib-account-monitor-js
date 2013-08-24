@@ -1,4 +1,4 @@
-function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, Accounts, RegularTransactions, Reports, BankData, atmosphere) {
+function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, UserService, Accounts, RegularTransactions, Reports, BankData, atmosphere) {
 	$scope.editingRT = [];
 
 	$scope.editRT = function(i) {
@@ -20,6 +20,7 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, Acco
     request.contentType = "application/json";
     request.fallbackTransport = "polling";
     request.trackMessageLength = true;
+    request.headers = {"X-GPlus-AccessToken": UserService.getAccessToken()};
     request.enableXDR = true;
     request.readResponsesHeaders = false;
 	
@@ -69,4 +70,4 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, Acco
 	
 }
  
-//RegularTransactionListCtrl.$inject = ['$scope', '$routeParams', '$stateParams', '$q', 'Accounts', 'RegularTransactions', 'Reports', 'BankData', 'atmosphere'];
+//RegularTransactionListCtrl.$inject = ['$scope', '$routeParams', '$stateParams', '$q', 'UserService', 'Accounts', 'RegularTransactions', 'Reports', 'BankData', 'atmosphere'];

@@ -1,0 +1,20 @@
+<div id="loadingScreen"
+	style="position: absolute; top: 0px; bottom: 0px; width: 100%;">
+	<div style="height: 50%; width: 100%; margin-bottom: -100px;"></div>
+	<div style="height: 200px; width: 100%;">
+		<center>
+			<div ng-click="sayHello()" style="font-weight: 300; font-size: 48pt;">Online Banking</div>
+			<g+signin clientid="541821719407-18bjvhurovjtv3g1ivkgcm8sdrc59s97"></g+signin>
+		</center>
+	</div>
+</div>
+
+
+<script>
+	// Must be in global scope... Callback for Google+ Sign-In
+	function signinCallback(authResult) {
+		// route through to the angular scope for this element.
+		$('#loadingScreen').scope().signinCallback(authResult);
+	}
+</script>
+

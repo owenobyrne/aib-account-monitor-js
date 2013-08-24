@@ -1,8 +1,18 @@
 <div>
-	<span style="padding-right: 20px;" ng-repeat="pendingtransaction in pendingtransactions">
-		{{pendingtransaction.narrative}} - {{pendingtransaction.amount | number:2}} DR
-	</span>
+
 	<table class="table table-condensed">
+		<!-- Pending transactions first -->	
+		<tr style="color: #999;" ng-repeat="pendingtransaction in pendingtransactions" ng-animate="'fade'">
+			<td style="text-align: right">{{pendingtransaction.dateAddedAsDate | date:"d MMM"}}</td>
+			<td>
+				<b style="font-size: 16px;">{{pendingtransaction.narrative}}</b>
+				<small><em style="font-weight: 300;">&nbsp;&nbsp;PENDING</em></small>
+			</td>
+			<td style="text-align: right">{{pendingtransaction.amount | number:2}}</td>
+			<td><small>DR</small></td>
+		</tr>
+	
+		<!-- then posted transactions -->	
 		<tr ng-repeat="transaction in transactions" ng-animate="'fade'">
 			<td style="text-align: right">{{transaction.transaction.transDate | date:"d MMM"}}</td>
 			<td>
@@ -13,7 +23,7 @@
  			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]"  style="font-weight: 300;">no comment</div>
 			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html-unsafe="parseHashtags(transaction.transaction.comment)"  style="font-weight: 300;"></div>
 			<div ng-show="editingTransaction[$index]"><form novalidate>
-				<input type="text" ng-focus="editingTransaction[$index]" ng-model="transaction.transaction.comment"/>
+				<input style="width: 500px" type="text" ng-focus="editingTransaction[$index]" ng-model="transaction.transaction.comment"/>
 				<button ng-click="updateTransaction($index)">done</button>
 				</form></div>
 			</div>

@@ -19,7 +19,7 @@
 			</div>
 			<div ng-show="editingRT[$index]">
 				<form novalidate>
-				<input type="text" ng-model="rtransaction.description"/>
+				<input type="text"  ng-focus="editingRT[$index]" ng-model="rtransaction.description"/>
 				<button ng-click="updateRT($index)">done</button>
 				</form>
 			</div>

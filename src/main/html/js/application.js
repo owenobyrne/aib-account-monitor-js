@@ -1,33 +1,61 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.state', 'ngDragDrop'])
+angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
 	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
-		
+		$urlRouterProvider.otherwise("/login"); 
+		 
 		$stateProvider
-			.state('application', {
-				// this is an abstract state. It runs, then falls through to the next state that matches.
-				url: "", // root route i.e. /
-				//abstract: true,
+			.state('login', {
+				url: "/login",
 				views: {
 					// the @ signifies that this view is in the rootview rather than a 
 					// child view of accounts. (after the @ is the state name)
 					
-					"topview@": {
+					"applicationview@": {
+						templateUrl: "/templates/login.html",
+						controller: LoginCtrl						
+					}
+				}
+			})
+			.state('application', {
+				url: "/app", 
+				views: {
+					// the @ signifies that this view is in the rootview rather than a 
+					// child view of accounts. (after the @ is the state name)
+					
+					"applicationview@": {
+						templateUrl: "/templates/application.html",
+						controller: function(UserService) {
+							// see if there's an accesstoken in localstorage and recover it.
+							var at = UserService.getAccessToken();
+							if (at != '') {
+								UserService.setAccessToken(at);
+							}
+						}
+					},
+					"headerview@application": {
+						templateUrl: "/templates/header.html",
+						controller: HeaderCtrl						
+					},
+					"topview@application": {
 						templateUrl: "/templates/account_list.html",
 						controller: AccountListCtrl						
 					},
-					"mainview@": {
+					"mainview@application": {
 						template: 'Something here'	
 					},
-					"rightview@": { 
+					"rightview@application": { 
 						templateUrl: "/templates/regular_transaction_list.html",
 						controller: RegularTransactionListCtrl
 					}
 				}
 			})
 			.state("application.transactions", {
+				// as this is a nested state (application.blah) then the 
+				// following URL has the parent state URL prepended 
+				// i.e. /app/accounts/...
 				url: "/accounts/:accountName/transactions",
 				views: {
-					"mainview@": {
+					"mainview@application": {
 						templateUrl: "/templates/transaction_list.html",
         				controller: TransactionListCtrl	
 					}
@@ -40,8 +68,41 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 	])
-	
-	
+	// called when the application starts up.
+	.run(function ($rootScope, $state, $stateParams, localStorageService) {
+		localStorageService.setPrefix('onlinebanking');
+		console.log("in here");
+		// make the route/template state available to everything
+	    $rootScope.$state = $state;
+	    $rootScope.$stateParams = $stateParams;
+	})
+	.factory('UserService', function($http, localStorageService) {
+		var accessToken = localStorageService.get("accessToken");
+		var profile = {};
+		return {
+      		setProfile : function(p) {
+      			profile = p;
+      		},
+      		getProfile : function() {
+      			return profile;
+      		},
+      		setAccessToken : function(at) {
+      			accessToken = at;
+      			localStorageService.set("accessToken", at);
+      			$http.defaults.headers.common['X-GPlus-AccessToken'] = at;
+      		},
+      		getAccessToken : function() {
+      			return accessToken;
+      		},
+      		deleteAccessToken : function() {
+      			accessToken = "";
+      			localStorageService.remove("accessToken");
+      			profile = {};
+      			delete $http.defaults.headers.common['X-GPlus-AccessToken'];	
+      		}
+      		
+  		};
+	})
 	.directive('sparkline', function( /* dependencies */) {
 			var margin = {top: 3, right: 3, bottom: 3, left: 3},
 			    width = 180 - margin.left - margin.right,
@@ -94,7 +155,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 									.datum(data)
 									.attr("class", "line")
 									.attr("d", line)
-									.attr("stroke", function(d, i) { console.log(scope.accountbalance); return scope.accountbalance > 0 ? "steelblue" : "red"; });
+									.attr("stroke", function(d, i) { return scope.accountbalance > 0 ? "steelblue" : "red"; });
 							});
 
 						}
@@ -125,47 +186,6 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.st
 		    });
 		    
 		    
-		    element.bind("blur",function(){
-		      
-		      if(abortFocusing) return;
-		      
-		      $timeout(function(){
-		        ngFocusSet(scope,false);
-		      },0);
-		      
-		    });
-		    
-		    
-		    var timerStarted = false;
-		    var focusCount = 0;
-		    
-		    function startTimer(){
-		      $timeout(function(){
-		        timerStarted = false;
-		        if(focusCount > 3){
-		          unwatch();
-		          abortFocusing = true;
-		          throw new Error("Aborting : ngFocus cannot be assigned to the same variable with multiple elements");
-		        }
-		      },200);
-		    }
-		    
-		    element.bind("focus",function(){
-		      
-		      if(abortFocusing) return;
-		      
-		      if(!timerStarted){
-		        timerStarted = true;
-		        focusCount = 0;
-		        startTimer();
-		      }
-		      focusCount++;
-		      
-		      $timeout(function(){
-		        ngFocusSet(scope,true);
-		      },0);
-		      
-		    });
 		  };
 		});
 
