@@ -1,6 +1,13 @@
-<div ng-mouseover="show1=true" ng-mouseleave="show1=false" style="padding-left: 10px;">
-	<div ng-repeat="account in accounts" data-drop="true" data-jqyoui-options ng-model="accounts" jqyoui-droppable ng-animate="'fade'"  style="margin: 5px; width: 200px; padding: 2px 10px 2px 10px; border-right: solid #cccccc 1px;  box-shadow: 4px 0px 7px -4px rgba(205,205,205,1); float: left;">
-		<div style="font-family: roboto; font-weight: 300; font-size: 18px; color: #555555;">
+<div ng-mouseover="show1=true" ng-mouseleave="show1=false" style="padding: 10px 0 0 10px; width: 220px;">
+	<div ng-repeat="account in accounts" data-drop="true" data-jqyoui-options ng-model="accounts" jqyoui-droppable ng-animate="'fade'"  
+		style="border: 1px solid #d8d8d8;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+background-color: #fff;
+border-bottom-width: 2px;
+margin: 0px 0 10px 0;
+width: 200px;">
+		<div style="padding: 2px 5px 0 5px; font-family: roboto; font-weight: 300; font-size: 18px; color: #555555;">
 			<a href="#/app/accounts/{{account.name}}/transactions"  style="color: #555555;">{{account.description}}</a>
 		</div>
 		<div>
@@ -12,7 +19,9 @@
 			</div>
 			<div style="position: absolute;width:23px; margin: 7px 2px 7px 0px; height: 16px; margin-left: 150px; background-image: url(images/transfer.png);"></div>
 		</div>
-		<div  style="font-family: 'roboto'; font-size: 7pt; color: #999999;">
+		<div  style="-webkit-border-radius: 0 0 2px 2px;
+border-radius: 0 0 2px 2px;
+background-color: #f8f8f8; border-top: 1px solid #e5e5e5; padding: 2px 5px 2px 5px; font-size: 7pt; color: #999999;">
 			<b>{{account.bank}} {{account.name}}</b><br/>
 			{{account.bic}} / {{formatIBAN(account.iban)}}
 		</div>
