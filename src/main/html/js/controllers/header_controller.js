@@ -13,13 +13,12 @@ function HeaderCtrl($scope, UserService, $location) {
 	        dataType: 'jsonp',
 	        success: function(result) {
 	          console.log('revoke response: ' + result);
-	          UserService.deleteAccessToken();
-	          $scope.$state.go("login");
-	       
-	          // need to force a nextTick() 
-	          // http://stackoverflow.com/questions/17039998/angular-not-making-http-requests-immediately
-	          $scope.$apply();
-				
+	          // the success callback will happen "outside" angular, 
+	          // so wrap it in $scope.$apply to make angular aware of it.
+	          $scope.$apply(function() {
+	        	  UserService.deleteAccessToken();
+		          $scope.$state.go("login"); 
+	          });
 	          
 	        },
 	        error: function(e) {

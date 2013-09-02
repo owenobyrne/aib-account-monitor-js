@@ -1,6 +1,19 @@
 function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Transactions) {
-	$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
-	$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
+	if ($stateParams.accountName != null) {
+		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
+		$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
+	} else {
+		$scope.transactions = Transactions.transactions();
+		$scope.pendingtransactions = Transactions.pendingtransactions();	
+	}
+	
+	$scope.sameDate = function(i) {
+		if (i > 0 && $scope.transactions[i].transaction.transDate == $scope.transactions[i-1].transaction.transDate) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 	
 	$scope.editingTransaction = [];
 
@@ -22,6 +35,12 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Trans
 			return t.link("/search?q="+tag);
 		});
 	};
-}
+} 
+	
+//	   google.maps.event.addListener(map, "click", function (e) { 
+//        document.form1.waypointLog.value = e.latLng.lat().toFixed(6) 
+//        + ' |' + e.latLng.lng().toFixed(6); 
+//	   }
+
  
 //TransactionListCtrl.$inject = ['$scope', '$routeParams', '$stateParams', 'Accounts', 'Transactions'];

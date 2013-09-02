@@ -54,12 +54,19 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 	});
 	
 	$scope.beforeNextPayDay = function(rt) {
-		return rt.nextDate < "2013-08-20 06:00:00";
+		return rt.nextDate < "2013-09-20 06:00:00";
 	};
 	
 	$scope.refreshFromAIB = function() {
 		BankData.run({action:"refreshDataFromAIB"});
 	};
+	$scope.transfer = function() {
+		Accounts.transfer({accountName:"OLD CASHSAVE-027", accountNameTo: "SAVINGS-275"}, {
+			narrativeFrom: "testing api 2",
+			narrativeTo: "testing api 2",
+			amount: "4.00"
+		});
+	};	
 	
 	$scope.dueDate = function(rt) {
 		//moment().format();

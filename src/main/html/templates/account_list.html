@@ -1,29 +1,80 @@
-<div ng-mouseover="show1=true" ng-mouseleave="show1=false" style="padding: 10px 0 0 10px; width: 220px;">
-	<div ng-repeat="account in accounts" data-drop="true" data-jqyoui-options ng-model="accounts" jqyoui-droppable ng-animate="'fade'"  
-		style="border: 1px solid #d8d8d8;
--webkit-border-radius: 3px;
-border-radius: 3px;
-background-color: #fff;
-border-bottom-width: 2px;
-margin: 0px 0 10px 0;
-width: 200px;">
-		<div style="padding: 2px 5px 0 5px; font-family: roboto; font-weight: 300; font-size: 18px; color: #555555;">
+<div id="accountPanels" ng-mouseover="showBalance=true" 
+	ng-mouseleave="showBalance=false" 
+	style="	padding: 10px 0 0 10px; 
+			width: 220px;">
+			
+	<div ng-repeat="account in accounts" 
+		ng-animate="'fade'" 
+		id="{{$index}}"
+		class="accountPanel"
+		ng-model="fromAccount"
+		jqyoui-droppable="{
+			index: $index,
+			stack: true,
+			multiple: true,
+			onDrop: 'dropTransfer(event, ui)'
+		}"
+		data-drop="true"
+		data-jqyoui-options="{
+			accept: '{{whatCanIAccept($index)}}',
+			activeClass: 'highlight',
+			hoverClass: 'hover'
+		}">
+				
+		<div style="padding: 2px 5px 0 5px; 
+					font-family: roboto; 
+					font-weight: 300; 
+					font-size: 18px; 
+					color: #555555;">
 			<a href="#/app/accounts/{{account.name}}/transactions"  style="color: #555555;">{{account.description}}</a>
 		</div>
 		<div>
 			<sparkline accountbalance="account.balance" data="sparklines[account.name]"></sparkline>
 		</div>
-		<div data-drag="true" ng-model="accounts" jqyoui-draggable="{index: {{$index}}, animate:true}"  data-jqyoui-options ng-animate="'fade'" class="balanceAmount" style="background-color: rgba(255, 255, 255,0.9); position: relative;  font-family: 'roboto black'; font-size: 18px; padding-left: 5px; line-height: 30px; height: 30px; margin-top: -30px; text-align: left;" ng-show="show1">
+		<div id="{{$index}}" 
+			data-drag="true" 
+			jqyoui-draggable="{
+				index: $index,
+				placeholder: 'keep'
+			}"
+			ng-model="accounts"
+			data-jqyoui-options="{
+				helper: 'clone',
+				revert: 'invalid'
+			}"
+			ng-show="showBalance" 
+			ng-animate="'fade'" 
+			ng-class="{canTransferFrom: accounts[$index].canTransferFrom}" 
+			style="	background-color: rgba(255, 255, 255,0.9); 
+					position: relative;  
+					font-family: 'roboto black'; 
+					font-size: 18px; 
+					padding-left: 5px; 
+					line-height: 30px; 
+					height: 30px; 
+					margin-top: -30px; 
+					text-align: left;" >
+			
 			<div style="float: left; width: 150px; height: 25px;">
 				{{account.balance < 0 ? "(" : ""}}{{account.balance | number:2}} <span style="font-size: 8pt; font-family: roboto; font-weight: 300; ">EUR</span>{{account.balance < 0 ? ")" : ""}}
 			</div>
 			<div style="position: absolute;width:23px; margin: 7px 2px 7px 0px; height: 16px; margin-left: 150px; background-image: url(images/transfer.png);"></div>
 		</div>
-		<div  style="-webkit-border-radius: 0 0 2px 2px;
-border-radius: 0 0 2px 2px;
-background-color: #f8f8f8; border-top: 1px solid #e5e5e5; padding: 2px 5px 2px 5px; font-size: 7pt; color: #999999;">
+		<div style="-webkit-border-radius: 0 0 2px 2px;
+					border-radius: 0 0 2px 2px;
+					background-color: #f8f8f8; 
+					border-top: 1px solid #e5e5e5; 
+					padding: 2px 5px 2px 5px; 
+					font-size: 7pt; 
+					color: #999999;">
+			
 			<b>{{account.bank}} {{account.name}}</b><br/>
 			{{account.bic}} / {{formatIBAN(account.iban)}}
 		</div>
 	</div>
+	<script>
+		function fnfn(el) {
+			$('#accountPanels').$scope().fnfn(el);
+		}
+	</script>
 </div>

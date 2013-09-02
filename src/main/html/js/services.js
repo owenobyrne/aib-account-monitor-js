@@ -2,7 +2,7 @@ var serviceEndpoint = "http://payb.in/aibaccountmonitor/api";
 
 angular.module('onlinebankingServices', ['ngResource'])
     .factory('Accounts', function($resource){
-    	return $resource(serviceEndpoint + '/accounts/:sparkline:accountName/:transactionType', {}, {
+    	return $resource(serviceEndpoint + '/accounts/:sparkline:accountName/:transactionType/:accountNameTo', {}, {
     		all: {
     			method:'GET', 
     			params: {accountName:""}, 
@@ -21,6 +21,15 @@ angular.module('onlinebankingServices', ['ngResource'])
     			method:'GET', 
     			params: {accountName:"@accountName", transactionType:"transactions"}, 
     			isArray:true
+    		},
+    		transfer: {
+    			method:'POST', 
+    			params: {
+    				accountName:"@accountName", 
+    				transactionType:"transferto", 
+    				accountNameTo:"@accountNameTo"
+    				}, 
+    			isArray:false
     		},
     		pendingtransactions: {
     			method:'GET', 
@@ -45,11 +54,21 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('Transactions', function($resource){
-		return $resource(serviceEndpoint + '/transactions/:transactionId', {}, {
+		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType', {}, {
 			update: {
 				method:'PUT',
 				params: {transactionId:"@transactionId"}
-			}
+			},
+			transactions: {
+    			method:'GET', 
+    			params: {transactionType:"posted"}, 
+    			isArray:true
+    		},
+    		pendingtransactions: {
+    			method:'GET', 
+    			params: {transactionType:"pending"}, 
+    			isArray:true
+    		}
 		});
     })
     .factory('Reports', function($resource){

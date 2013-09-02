@@ -11,15 +11,16 @@ function LoginCtrl($scope, $location, Login, UserService) {
 			var loginDetails = {"accessToken": authResult['access_token']};
 			UserService.setAccessToken(authResult['access_token']);
 			console.log(loginDetails);
-			Login.login(loginDetails, function(profile) {
-				UserService.setProfile(profile);
-				$scope.$state.go("application");
-				
+			
+			// This is going to happen "outside" angular, so wrap it in 
+			// $scope.$apply to make angular aware of it.
+			$scope.$apply(function() {
+				Login.login(loginDetails, function(profile) {
+					UserService.setProfile(profile);
+					$scope.$state.go("application");
+					
+				});				
 			});
-	
-			// need to force a nextTick() 
-			// http://stackoverflow.com/questions/17039998/angular-not-making-http-requests-immediately
-			$scope.$apply();
 			
 //			gapi.client.load('plus', 'v1', function() {
 //				var request = gapi.client.plus.people.get({

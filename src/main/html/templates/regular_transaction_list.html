@@ -1,5 +1,5 @@
 <div>
-	<span ng-click="refreshFromAIB()">Websocket stuff:</span> {{ws}}
+	<span ng-click="transfer()">Websocket stuff:</span> {{ws}}
 	<table class="table table-condensed">
 		<tr ng-repeat="rtransaction in regularTransactions | filter:beforeNextPayDay">
 			<td>{{rtransaction.description}} {{dueDate(rtransaction)}}</td>

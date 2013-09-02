@@ -36,12 +36,13 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 						templateUrl: "/templates/header.html",
 						controller: HeaderCtrl						
 					},
-					"topview@application": {
+					"accountview@application": {
 						templateUrl: "/templates/account_list.html",
 						controller: AccountListCtrl						
 					},
 					"mainview@application": {
-						template: 'Something here'	
+						templateUrl: "/templates/transaction_list.html",
+        				controller: TransactionListCtrl	
 					},
 					"rightview@application": { 
 						templateUrl: "/templates/regular_transaction_list.html",
