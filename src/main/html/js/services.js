@@ -54,10 +54,14 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('Transactions', function($resource){
-		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType', {}, {
+		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType/:action', {}, {
 			update: {
 				method:'PUT',
 				params: {transactionId:"@transactionId"}
+			},
+			updateCoords: {
+				method:'PUT',
+				params: {transactionId:"@transactionId", action: "coords"}
 			},
 			transactions: {
     			method:'GET', 

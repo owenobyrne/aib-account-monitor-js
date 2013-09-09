@@ -87,6 +87,7 @@ body {
 <script src="http://d3js.org/d3.v3.js" charset="UTF-8"></script>
 <script src="js/libs/later.js"></script>
 <script src="js/libs/moment.js"></script>
+<script src="js/libs/wkb.js"></script>
 <script src="js/libs/base64.js"></script>
 <script src="js/libs/jquery.atmosphere.js"></script>
 <script	src="js/modules/angular-localstorage.js"></script>
@@ -101,9 +102,44 @@ body {
 <script src="js/controllers/transaction_list_controller.js"></script>
 <script src="js/controllers/regular_transaction_list_controller.js"></script>
 <script src="js/controllers/login_controller.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDH1SOfsvsLhZwMY1KTsOoWtlQzI0D5Kio&v=3.exp&sensor=false"></script>
 </head>
 <body>
 	<div ui-view="applicationview"></div>
+
+<script>
+var map;
+
+function initialize() {
+  var mapOptions = {
+    zoom: 15,
+    center: new google.maps.LatLng(53.4822, -6.1486),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var mapDiv = document.getElementById('map-canvas');
+  map = new google.maps.Map(mapDiv, mapOptions);
+
+  google.maps.event.addListener(map, 'click', mapClickHandler);
+  /*
+  var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(53, -5),
+      map: map,
+      title: 'Hello World!'
+  });
+  */
+  // We add a DOM event here to show an alert if the DIV containing the
+  // map is clicked. Note that we do this within the intialize function
+  // since the document object isn't loaded until after the window.load
+  // event.
+  //google.maps.event.addDomListener(mapDiv, 'click', showAlert);
+}
+
+function showAlert() {
+  window.alert('DIV clicked');
+}
+
+</script>
+
 </body>
 
 

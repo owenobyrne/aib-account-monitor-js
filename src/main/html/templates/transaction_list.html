@@ -1,4 +1,4 @@
-<div>
+<div id="transactionList">
 
 	<table class="table table-condensed">
 		<!-- Pending transactions first -->	
@@ -6,7 +6,7 @@
 			<td style="width: 60px;"><center>
 				<div style="">
 					<div style="background: red; color: white; font-size: 10pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{pendingtransaction.dateAddedAsDate | date:"MMM" | uppercase}}</div>
-					<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333;">{{pendingtransaction.dateAddedAsDate | date:"d"}}</div>
+					<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333; background: white;">{{pendingtransaction.dateAddedAsDate | date:"d"}}</div>
 				</div>
 			</center></td>
 			<td>
@@ -22,11 +22,11 @@
 			<td style="width: 60px;"><center>
 				<div ng-hide="sameDate($index)">
 					<div style="background: red; color: white; font-size: 10pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{transaction.transaction.transDate | date:"MMM" | uppercase}}</div>
-					<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333;">{{transaction.transaction.transDate | date:"d"}}</div>
+					<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333; background: white;">{{transaction.transaction.transDate | date:"d"}}</div>
 				</div>
 			</center></td>
 			<td>
-			<b style="font-size: 16px;"><span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{transaction.transaction.account}} &raquo; </span>{{transaction.transaction.narrative}}</b> 
+			<b style="font-size: 16px;"><span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{transaction.transaction.account}} &raquo; </span><span  ng-click="moveMap($index)">{{transaction.transaction.narrative}}</span></b> 
 			<small><em class="muted" style="font-weight: 300;">{{transaction.transaction.subNarrative}}</em></small>
 			<br/>
 			<div>
