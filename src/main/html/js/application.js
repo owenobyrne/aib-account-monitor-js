@@ -11,7 +11,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 					// child view of accounts. (after the @ is the state name)
 					
 					"applicationview@": {
-						templateUrl: "/templates/login.html",
+						templateUrl: "templates/login.html",
 						controller: LoginCtrl						
 					}
 				}
@@ -23,7 +23,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 					// child view of accounts. (after the @ is the state name)
 					
 					"applicationview@": {
-						templateUrl: "/templates/application.html",
+						templateUrl: "templates/application.html",
 						controller: function(UserService) {
 							// see if there's an accesstoken in localstorage and recover it.
 							var at = UserService.getAccessToken();
@@ -33,19 +33,19 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 						}
 					},
 					"headerview@application": {
-						templateUrl: "/templates/header.html",
+						templateUrl: "templates/header.html",
 						controller: HeaderCtrl						
 					},
 					"accountview@application": {
-						templateUrl: "/templates/account_list.html",
+						templateUrl: "templates/account_list.html",
 						controller: AccountListCtrl						
 					},
 					"mainview@application": {
-						templateUrl: "/templates/transaction_list.html",
+						templateUrl: "templates/transaction_list.html",
         				controller: TransactionListCtrl	
 					},
 					"rightview@application": { 
-						templateUrl: "/templates/regular_transaction_list.html",
+						templateUrl: "templates/regular_transaction_list.html",
 						controller: RegularTransactionListCtrl
 					}
 				}
@@ -57,7 +57,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 				url: "/accounts/:accountName/transactions",
 				views: {
 					"mainview@application": {
-						templateUrl: "/templates/transaction_list.html",
+						templateUrl: "templates/transaction_list.html",
         				controller: TransactionListCtrl	
 					}
 				}
