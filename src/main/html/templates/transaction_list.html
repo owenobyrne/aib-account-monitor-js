@@ -10,7 +10,7 @@
 				</div>
 			</center></td>
 			<td>
-				<b style="font-size: 16px;"><span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{pendingtransaction.account}} &raquo; </span>{{pendingtransaction.narrative}}</b>
+				<b style="font-size: 15px;"><span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{pendingtransaction.account}} &ndash; </span>{{pendingtransaction.narrative}}</b>
 				<small><em style="font-weight: 300;">&nbsp;&nbsp;PENDING</em></small>
 			</td>
 			<td style="text-align: right">{{pendingtransaction.amount | number:2}}</td>
@@ -26,8 +26,15 @@
 				</div>
 			</center></td>
 			<td>
-			<b style="font-size: 16px;"><span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{transaction.transaction.account}} &raquo; </span><span  ng-click="moveMap($index)">{{transaction.transaction.narrative}}</span></b> 
+			<b style="font-size: 15px;">
+				<span ng-show='!$stateParams.accountName' style="font-weight: 300;">{{transaction.transaction.account}} &ndash; </span>
+				<span ng-click="moveMap($index)">{{transaction.transaction.narrative}}</span>
+			</b> 
 			<small><em class="muted" style="font-weight: 300;">{{transaction.transaction.subNarrative}}</em></small>
+			<span ng-show="transaction.transaction.transferTransId" style="-webkit-border-radius: 3px; border-radius: 3px; margin-left: 10px; padding: 2px 5px 1px 3px; color: white; background: #ff6f31;">
+				<span style="margin-left: -5px; padding-right: 7px; font-size: 15px; font-family: 'Wingdings 3';">&#198;</span>
+				<span style=" font-size: 14px; font-weight: 300;">{{getTransferTransaction(transaction.transaction.transferTransId).account}}</span>
+			</span>
 			<br/>
 			<div>
  			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]"  style="font-weight: 300;">no comment</div>

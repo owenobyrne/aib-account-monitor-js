@@ -54,7 +54,7 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 	});
 	
 	$scope.beforeNextPayDay = function(rt) {
-		return rt.nextDate < "2013-09-20 06:00:00";
+		return rt.nextDate < UserService.getPayDate();
 	};
 	
 	$scope.refreshFromAIB = function() {

@@ -54,7 +54,7 @@ angular.module('onlinebankingServices', ['ngResource'])
 		});
     })
     .factory('Transactions', function($resource){
-		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType/:action', {}, {
+		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType:search/:action:tag', {}, {
 			update: {
 				method:'PUT',
 				params: {transactionId:"@transactionId"}
@@ -72,6 +72,11 @@ angular.module('onlinebankingServices', ['ngResource'])
     			method:'GET', 
     			params: {transactionType:"pending"}, 
     			isArray:true
+    		},
+    		taggedtransactions: {
+    			method:'GET',
+    			params: {search: "tags"},
+    			isArray: true
     		}
 		});
     })

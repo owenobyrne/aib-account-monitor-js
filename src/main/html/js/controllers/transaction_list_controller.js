@@ -3,12 +3,20 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Trans
 	if ($stateParams.accountName != null) {
 		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
 		$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
+	} else if ($stateParams.tag != null) {
+		$scope.transactions = Transactions.taggedtransactions({tag: $stateParams.tag});
+		$scope.pendingtransactions = [];		
 	} else {
 		$scope.transactions = Transactions.transactions();
 		$scope.pendingtransactions = Transactions.pendingtransactions();	
 	}
 	
 	$scope.selectedTransactionId = "";
+	
+	$scope.getTransferTransaction = function(t) {
+		// get an individual transaction
+		return {account: "testing"};
+	};
 	
 	$scope.sameDate = function(i) {
 		if (i > 0 && $scope.transactions[i].transaction.transDate == $scope.transactions[i-1].transaction.transDate) {
@@ -68,8 +76,8 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Trans
 	$scope.parseHashtags = function(comment) {
 		if (!comment) { return ""; }
 		return comment.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
-			var tag = t.replace("#","%23");
-			return t.link("/search?q="+tag);
+			var tag = t.replace("#","");
+			return t.link("#/app/tags/"+tag);
 		});
 	};
 

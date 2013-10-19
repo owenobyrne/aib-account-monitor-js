@@ -61,6 +61,18 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
         				controller: TransactionListCtrl	
 					}
 				}
+			})
+			.state("application.tags", {
+				// as this is a nested state (application.blah) then the 
+				// following URL has the parent state URL prepended 
+				// i.e. /app/accounts/...
+				url: "/tags/:tag",
+				views: {
+					"mainview@application": {
+						templateUrl: "templates/transaction_list.html",
+        				controller: TransactionListCtrl	
+					}
+				}
 			}); 
 	}])
 	.config(['$httpProvider', function($httpProvider) {
@@ -80,12 +92,22 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 	.factory('UserService', function($http, localStorageService) {
 		var accessToken = localStorageService.get("accessToken");
 		var profile = {};
+		var nextPayDate = "";
 		return {
       		setProfile : function(p) {
       			profile = p;
+
+      			var nextPayDateCron = profile.amp.payday;
+      			var cron = later.parse.cron(nextPayDateCron);
+      			nextPayDate = later.schedule(cron).next(1);
+      			console.log(nextPayDate);
+      			
       		},
       		getProfile : function() {
       			return profile;
+      		},
+      		getPayDate : function() {
+      			return nextPayDate;
       		},
       		setAccessToken : function(at) {
       			accessToken = at;
