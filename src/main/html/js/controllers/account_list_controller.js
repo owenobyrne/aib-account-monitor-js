@@ -23,8 +23,19 @@ function AccountListCtrl($scope, Accounts) {
 		// it is dropped. .length-1 should be the dropped location.
 		console.log("From " + $scope.fromAccount[$scope.fromAccount.length-1].name + 
 				" to " + $scope.accounts[$scope.fromAccount.length-1].name);
+				
+		Accounts.transfer({
+				accountName: $scope.fromAccount[$scope.fromAccount.length-1].name,
+				accountNameTo: $scope.accounts[$scope.fromAccount.length-1].name
+			}, {
+				narrativeFrom: "testing api 2",
+				narrativeTo: "testing api 2",
+				amount: "4.00"
+			}
+		);
 		
 		$scope.fromAccount = [];
+
 	};
 	
 	$scope.formatIBAN = function(iban) {
@@ -37,6 +48,14 @@ function AccountListCtrl($scope, Accounts) {
 		iban.substring(16, 20) + " " + 
 		iban.substring(20, 22); 
 	};
+	
+	$scope.transfer = function() {
+		Accounts.transfer({accountName:"OLD CASHSAVE-027", accountNameTo: "SAVINGS-275"}, {
+			narrativeFrom: "testing api 2",
+			narrativeTo: "testing api 2",
+			amount: "4.00"
+		});
+	};	
 }
 
 //AccountListCtrl.$inject = ['$scope', 'Accounts'];

@@ -14,7 +14,7 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Trans
 	$scope.selectedTransactionId = "";
 	
 	$scope.getTransferTransaction = function(t) {
-		// get an individual transaction
+		// get an individual transaction                        
 		return {account: "testing"};
 	};
 	

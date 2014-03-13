@@ -28,7 +28,12 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 							// see if there's an accesstoken in localstorage and recover it.
 							var at = UserService.getAccessToken();
 							if (at != '') {
+								// see if there's a profile...
+								var profile = UserService.getProfile();
+								
+								UserService.setProfile(profile);
 								UserService.setAccessToken(at);
+									
 							}
 						}
 					},
@@ -84,20 +89,19 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 	// called when the application starts up.
 	.run(function ($rootScope, $state, $stateParams, localStorageService) {
 		localStorageService.setPrefix('onlinebanking');
-		console.log("in here");
 		// make the route/template state available to everything
 	    $rootScope.$state = $state;
 	    $rootScope.$stateParams = $stateParams;
 	})
 	.factory('UserService', function($http, localStorageService) {
 		var accessToken = localStorageService.get("accessToken");
-		var profile = {};
+		var profile = localStorageService.get("profile");
 		var nextPayDate = "";
 		return {
       		setProfile : function(p) {
       			profile = p;
-
-      			var nextPayDateCron = profile.amp.payday;
+      			localStorageService.set("profile", p);
+      			var nextPayDateCron = profile.amp.payday.substr(2);
       			var cron = later.parse.cron(nextPayDateCron);
       			nextPayDate = later.schedule(cron).next(1);
       			console.log(nextPayDate);
@@ -121,6 +125,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
       			accessToken = "";
       			localStorageService.remove("accessToken");
       			profile = {};
+      			localStorageService.remove("profile");
       			delete $http.defaults.headers.common['X-GPlus-AccessToken'];	
       		}
       		

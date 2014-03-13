@@ -1,6 +1,6 @@
 function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, UserService, Accounts, RegularTransactions, Reports, BankData, atmosphere) {
 	$scope.editingRT = [];
-
+	$scope.nextPayDay = UserService.getPayDate();
 	$scope.editRT = function(i) {
 		$scope.editingRT[i] = true;
 		console.log("editing " + $scope.regularTransactions[i].narrative + "...");
@@ -46,7 +46,7 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 			var rb = account.balance;
 			
 			rt.forEach(function(t) {
-				rb = rb - t.amount;
+				if (t.account == account.name) { rb = rb - t.amount; }
 			});
 			
 			$scope.remainingBalance = rb;
@@ -54,25 +54,19 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 	});
 	
 	$scope.beforeNextPayDay = function(rt) {
-		return rt.nextDate < UserService.getPayDate();
+		return new Date(rt.nextDate) < UserService.getPayDate();
 	};
 	
 	$scope.refreshFromAIB = function() {
 		BankData.run({action:"refreshDataFromAIB"});
 	};
-	$scope.transfer = function() {
-		Accounts.transfer({accountName:"OLD CASHSAVE-027", accountNameTo: "SAVINGS-275"}, {
-			narrativeFrom: "testing api 2",
-			narrativeTo: "testing api 2",
-			amount: "4.00"
-		});
-	};	
+	
 	
 	$scope.dueDate = function(rt) {
 		//moment().format();
-		var cron = later.parse.cron(rt.cron.substring(2));
-		var dueDate = later.schedule(cron).next(1);
-		return moment(dueDate).from(moment());
+		//var cron = later.parse.cron(rt.cron.substring(2));
+		//var dueDate = later.schedule(cron).next(1);
+		return moment(rt.nextDate).from(moment());
 	};
 	
 }
