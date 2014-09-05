@@ -1,4 +1,4 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
+angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRoute', 'ngAtmosphere', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
 	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise("/login"); 
@@ -215,5 +215,10 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ngAtmosphere', 'ui.ro
 		    
 		    
 		  };
-		});
+		})
+		.filter('to_trusted_html', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }]);
 

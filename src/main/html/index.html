@@ -7,8 +7,9 @@
 <link
 	href='//fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,700,700italic,900&subset=latin'
 	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" media="all" />
+
 <style type="text/css">
 body {
 	font-smooth: always;
@@ -16,6 +17,9 @@ body {
 	-webkit-font-smoothing: antialiased;
 	background-color: #fafafa;
 }
+
+/* Some fixes for AngularUI Bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .fade-enter {
 	-webkit-transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
@@ -75,22 +79,28 @@ body {
 	stroke-width: 1.5px;
 }
 </style>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" media="all" />
+
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<!-- script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 <script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 <script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.js"></script>
 <script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-resource.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js" charset="UTF-8"></script>
 <script src="js/libs/later.js"></script>
 <script src="js/libs/moment.js"></script>
 <script src="js/libs/base64.js"></script>
 <script src="js/libs/jquery.atmosphere.js"></script>
 <script	src="js/modules/angular-localstorage.js"></script>
-<script	src="js/modules/angular-ui-router-0.0.2.js"></script>
+<script	src="js/modules/angular-ui-router-0.2.11.js"></script>
 <script src="js/modules/angular-atmosphere.js"></script>
 <script src="js/modules/angular-dragdrop-1.0.3.js"></script>
 <script src="js/modules/angular-google-plus-signin.js"></script>
@@ -100,6 +110,7 @@ body {
 <script src="js/controllers/account_list_controller.js"></script>
 <script src="js/controllers/transaction_list_controller.js"></script>
 <script src="js/controllers/regular_transaction_list_controller.js"></script>
+<script src="js/controllers/transfer_controller.js"></script>
 <script src="js/controllers/login_controller.js"></script>
 <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDH1SOfsvsLhZwMY1KTsOoWtlQzI0D5Kio&v=3.exp&sensor=false"></script>
 </head>

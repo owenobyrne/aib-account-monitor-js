@@ -38,7 +38,7 @@
 			<br/>
 			<div>
  			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]"  style="font-weight: 300;">no comment</div>
-			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html-unsafe="parseHashtags(transaction.transaction.comment)"  style="font-weight: 300;"></div>
+			<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html="parseHashtags(transaction.transaction.comment) | to_trusted_html"  style="font-weight: 300;"></div>
 			<div ng-show="editingTransaction[$index]"><form novalidate>
 				<input style="width: 500px" type="text" ng-focus="editingTransaction[$index]" ng-model="transaction.transaction.comment"/>
 				<button ng-click="updateTransaction($index)">done</button>

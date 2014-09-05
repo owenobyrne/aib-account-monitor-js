@@ -31,7 +31,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
 				<configuration>
-					<url>http://10.10.1.2:8080/manager/text</url>
+					<url>http://payb.in/manager/text</url>
 					<server>TomcatServerOnMiller</server>
 					<warFile>C:/Owen/git/aib-account-monitor-js/target/${project.build.finalName}.war</warFile>
 					<path>/</path>

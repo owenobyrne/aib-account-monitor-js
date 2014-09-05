@@ -1,4 +1,4 @@
-function HeaderCtrl($scope, UserService, $location) {
+function HeaderCtrl($scope, UserService, $modal, $location) {
 	
 	$scope.profile = UserService.getProfile();
 	

@@ -1,5 +1,5 @@
 function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Transactions) {
-	
+
 	if ($stateParams.accountName != null) {
 		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
 		$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
