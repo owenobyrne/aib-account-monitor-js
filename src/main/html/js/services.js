@@ -91,8 +91,8 @@ angular.module('onlinebankingServices', ['ngResource'])
     .factory('BankData', function($resource){
 		return $resource(serviceEndpoint + '/bankdata/:action', {}, {
 			run: {
-				method:'GET', 
-				isArray:true
+				method:'GET',
+				isArray: false
 			}
 		});
     })
