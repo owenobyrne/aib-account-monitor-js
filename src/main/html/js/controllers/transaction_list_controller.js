@@ -1,4 +1,4 @@
-function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Transactions) {
+function TransactionListCtrl($scope, $routeParams, $stateParams, $modal, Accounts, Transactions) {
 
 	if ($stateParams.accountName != null) {
 		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
@@ -91,6 +91,26 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, Accounts, Trans
 		}
 
 		return doubles[0];
+	};
+	
+	$scope.markAsRegularTransaction = function(i) {
+		var selectRegularTransactionModal = $modal.open({
+		      templateUrl: 'templates/select_regular_transaction.html',
+		      controller: SelectRegularTransactionCtrl,
+		      resolve: {
+		          account: function () {
+		            return $scope.transactions[i].transaction.account;
+		          }
+	          }
+		     
+		 });
+		
+		selectRegularTransactionModal.result.then(function (regularTransaction) {
+			Transactions.markAsRegularTransaction({transactionId: $scope.transactions[i].transaction.transId}, regularTransaction);
+			console.log(regularTransaction);
+	    }, function () {
+	      console.log('Modal dismissed at: ' + new Date());
+	    });
 	};
 	
 } 

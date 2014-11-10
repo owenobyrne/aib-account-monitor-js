@@ -63,6 +63,10 @@ angular.module('onlinebankingServices', ['ngResource'])
 				method:'PUT',
 				params: {transactionId:"@transactionId", action: "coords"}
 			},
+			markAsRegularTransaction: {
+				method:'PUT',
+				params: {transactionId:"@transactionId", action: "markAsRegularTransaction"}
+			},
 			transactions: {
     			method:'GET', 
     			params: {transactionType:"posted"}, 

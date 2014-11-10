@@ -18,7 +18,7 @@
 		</tr>
 	
 		<!-- then posted transactions -->	
-		<tr ng-repeat="transaction in transactions" ng-animate="'fade'">
+		<tr ng-repeat="transaction in transactions" ng-animate="'fade'" ng-mouseenter="showMenu=true" ng-mouseleave="showMenu=false" ng-init="showMenu=false">
 			<td style="width: 60px;"><center>
 				<div ng-hide="sameDate($index)">
 					<div style="background: red; color: white; font-size: 10pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{transaction.transaction.transDate | date:"MMM" | uppercase}}</div>
@@ -31,6 +31,14 @@
 				<span ng-click="moveMap($index)">{{transaction.transaction.narrative}}</span>
 			</b> 
 			<small><em class="muted" style="font-weight: 300;">{{transaction.transaction.subNarrative}}</em></small>
+			<small><em ng-show="showMenu" class="muted" style="font-weight: 300;"><span class="dropdown" on-toggle="toggled(open)">
+			      <a href class="dropdown-toggle">
+			        Options
+			      </a>
+			      <ul class="dropdown-menu">
+			      	<li><a ng-click="markAsRegularTransaction($index)" href>Mark as a Regular Transaction</a></li>
+			      </ul>    
+			</span></em></small>
 			<span ng-show="transaction.transaction.transferTransId" style="-webkit-border-radius: 3px; border-radius: 3px; margin-left: 10px; padding: 2px 5px 1px 3px; color: white; background: #ff6f31;">
 				<span style="margin-left: -5px; padding-right: 7px; font-size: 15px; font-family: 'Wingdings 3';">&#198;</span>
 				<span style=" font-size: 14px; font-weight: 300;">{{getTransferTransaction(transaction.transaction.transferTransId).account}}</span>
