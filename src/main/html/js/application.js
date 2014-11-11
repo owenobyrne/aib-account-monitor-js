@@ -1,4 +1,4 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRoute', 'ngAtmosphere', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
+angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRoute', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
 	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise("/login"); 

@@ -1,4 +1,4 @@
-function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, UserService, Accounts, RegularTransactions, Reports, BankData, atmosphere) {
+function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, UserService, Accounts, RegularTransactions, Reports, BankData) {
 	$scope.editingRT = [];
 	$scope.nextPayDay = UserService.getPayDate();
 	$scope.editRT = function(i) {
@@ -14,25 +14,22 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 		console.log("updating " + $scope.regularTransactions[i].id + "...");
 	};
 	
-	var request = new $.atmosphere.AtmosphereRequest();
-    request.transport = "websocket";
-    request.url = "http://payb.in/aibaccountmonitor/websockets/aibam/transactions";
-    request.contentType = "application/json";
-    request.fallbackTransport = "polling";
-    request.trackMessageLength = true;
-    request.headers = {"X-GPlus-AccessToken": UserService.getAccessToken()};
-    request.enableXDR = true;
-    request.readResponsesHeaders = false;
 	
-	atmosphere.init(request);
-	atmosphere.debug(true);
-	atmosphere.on(undefined, function(data) {
-		console.log(data.narrative);
-		// need to use $apply() here as the event is happening outside Angular - in a XHR callback.
-		$scope.$apply(function() {
-			$scope.ws = data.narrative;
+	var socket = new SockJS('/aibaccountmonitor/websockets/portfolio');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function(frame) {
+        console.log('Connected ');
+        console.log(frame);
+        
+        stompClient.subscribe("/greeting", function(message) {
+        	console.log(message.body);
         });
-	});
+        
+        
+    }, function(error) {
+        console.log("STOMP protocol error " + error);
+    });
+    
 	
 	$scope.regularTransactions = RegularTransactions.all();
 	//$scope.upcomingRegularTransactions = Reports.run({reportName:"regularTransactionsBeforeNextPayDay"});
