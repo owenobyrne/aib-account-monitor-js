@@ -1,4 +1,4 @@
-function AccountListCtrl($scope, $modal, Accounts) {
+function AccountListCtrl($scope, $mdDialog, Accounts) {
 	
 	$scope.accounts = Accounts.all();
 	$scope.fromAccount = [];
@@ -18,26 +18,25 @@ function AccountListCtrl($scope, $modal, Accounts) {
 		}
 	};
 	
-	$scope.dropTransfer = function(event, ui) {
+	$scope.dropTransfer = function($event, ui) {
 		// The dragged item is placed in the fromAccount array at the location 
 		// it is dropped. .length-1 should be the dropped location.
 		console.log("From " + $scope.fromAccount[$scope.fromAccount.length-1].name + 
 				" to " + $scope.accounts[$scope.fromAccount.length-1].name);
 		
-		
-		var transferModal = $modal.open({
+		var transferDialog = $mdDialog.show({
+		      targetEvent: $event,
 		      templateUrl: 'templates/transfer.html',
-		      controller: TransferCtrl,
+		      controller: 'TransferCtrl',
 		      resolve: {
 		          accounts: function () {
 		            return { from: $scope.fromAccount[$scope.fromAccount.length-1].name, 
 	            		to: $scope.accounts[$scope.fromAccount.length-1].name };
 		          }
 	          }
-		     
-		 });
+		    });
 
-	    transferModal.result.then(function (transferDetails) {
+	    transferDialog.then(function(transferDetails) {
 			Accounts.transfer({
 					accountName: transferDetails.fromAccount,
 					accountNameTo: transferDetails.toAccount

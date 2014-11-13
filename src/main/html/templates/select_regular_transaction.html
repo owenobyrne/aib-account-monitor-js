@@ -1,11 +1,11 @@
-<div class="modal-header">
-	<h3>Select Regular Transaction</h3>
+<md-dialog> 
+<md-content>
+<h2>Select Regular Transaction</h2>
+<div ng-repeat="rt in regularTransactionsForAccount">
+	<a href ng-click="assignRT($index)">{{rt.description}} <small>({{rt.narrative}})</small></a>
 </div>
-<div class="modal-body">
-	<div ng-repeat="rt in regularTransactionsForAccount">
-		<a href ng-click="assignRT($index)">{{rt.description}} <small>({{rt.narrative}})</small></a>
-	</div>	
+</md-content>
+<div class="md-actions">
+	<md-button ng-click="closeDialog()"> Cancel </md-button>
 </div>
-<div class="modal-footer">
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+</md-dialog>

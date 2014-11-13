@@ -13,6 +13,11 @@
 <script>
 	// Must be in global scope... Callback for Google+ Sign-In
 	function signinCallback(authResult) {
+		if (authResult['status']['signed_in']) {
+			console.log("Owen");
+		} else {
+			console.log("Ted!");
+		}
 		// route through to the angular scope for this element.
 		$('#loadingScreen').scope().signinCallback(authResult);
 	}

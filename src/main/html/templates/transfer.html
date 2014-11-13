@@ -1,13 +1,13 @@
-<div class="modal-header">
-	<h3>I'm a modal!</h3>
-</div>
-<div class="modal-body">
-	<input type="number" class="form-control" placeholder="Transfer Amount" name="amount" ng-model="transfer.amount">
+<md-dialog> 
+<md-content>
+<h2>Transfer</h2>
+<input type="number" class="form-control" placeholder="Transfer Amount" name="amount" ng-model="transfer.amount">
 	<textarea class="form-control" rows="3" name="message" ng-model="transfer.message" placeholder="Comment"></textarea>
 	<input type="text" maxlength="12" class="form-control" placeholder="AIB From Narrative" name="fromNarrative" ng-model="transfer.fromNarrative">
 	<input type="text" maxlength="18" class="form-control" placeholder="AIB To Narrative" name="toNarrative" ng-model="transfer.toNarrative">
+</md-content>
+<div class="md-actions">
+	<md-button ng-click="cancel()"> Cancel </md-button>
+	<md-button ng-click="ok()"> Transfer </md-button>
 </div>
-<div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">Transfer</button>
-	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+</md-dialog>

@@ -1,34 +1,40 @@
-<div style="background: #ececec;" id="transactionList">
-
+<div id="transactionList">
+	<div ng-show="pendingtransactions.length > 0">
+	<md-subheader style="background-color: transparent; padding-bottom: 6px; font-weight: 700;">Pending Transactions</md-subheader>
+	<md-card style="background: white;">
 	<!-- Pending transactions first -->	
 	<md-list>
       	<md-item style="color: #999;" ng-repeat="pendingtransaction in pendingtransactions" ng-animate="'fade'">
 			<md-item-content>
           		<div class="md-tile-left">
 	          		<center>
-						<div>
-							<div style="background: red; color: white; font-size: 10pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{pendingtransaction.dateAddedAsDate | date:"MMM" | uppercase}}</div>
-							<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333; background: white;">{{pendingtransaction.dateAddedAsDate | date:"d"}}</div>
+						<div style="width: 40px;">
+							<div style="background: red; color: white; font-size: 8pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{pendingtransaction.dateAddedAsDate | date:"MMM" | uppercase}}</div>
+							<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 13pt; font-weight: 300; color: #333; background: white;">{{pendingtransaction.dateAddedAsDate | date:"d"}}</div>
 						</div>
 					</center>
 				</div>
 				<div class="md-tile-content">
 					<h3><span ng-show='!$stateParams.accountName'>{{pendingtransaction.account}} &ndash; </span>{{pendingtransaction.narrative}}</b>{{pendingtransaction.amount | number:2}} <small>DR</small></h3>
-					<h4>PENDING</h4>
+					
 				</div>
 			</md-item-content>
       </md-item>	
 	</md-list>
+	</md-card>
+	</div>
 	
+	<md-subheader style="background-color: transparent; padding-bottom: 6px; font-weight: 700;">Transactions</md-subheader>
+	<md-card style="background: white;">
 	<!-- then posted transactions -->	
 	<md-list>
       	<md-item ng-repeat="transaction in transactions" ng-animate="'fade'" ng-mouseenter="showMenu=true" ng-mouseleave="showMenu=false" ng-init="showMenu=false">
 			<md-item-content>
           		<div class="md-tile-left">
 	          		<center>
-						<div ng-hide="sameDate($index)">
-							<div style="background: red; color: white; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{transaction.transaction.transDate | date:"MMM" | uppercase}}</div>
-							<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 15pt; font-weight: 300; color: #333; background: white;">{{transaction.transaction.transDate | date:"d"}}</div>
+						<div style="width: 40px;" ng-hide="sameDate($index)">
+							<div style="background: red; color: white; font-size: 8pt; font-weight: 900; -webkit-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0;">{{transaction.transaction.transDate | date:"MMM" | uppercase}}</div>
+							<div style="border: 1px solid #c8c8c8; -webkit-border-radius: 3px; border-radius: 3px; border-bottom-width: 2px; font-size: 12pt; font-weight: 300; color: #333; background: white;">{{transaction.transaction.transDate | date:"d"}}</div>
 						</div>
 					</center>
 				</div>
@@ -45,8 +51,8 @@
 						<span style=" font-size: 14px; font-weight: 300;">{{getTransferTransaction(transaction.transaction.transferTransId).account}}</span>
 					</span>
 					<p>
-			 			<div ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]">no comment</div>
-						<div ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html="parseHashtags(transaction.transaction.comment) | to_trusted_html"></div>
+			 			<div style="font-style: italic; font-size: 12px;" ng-click="editTransaction($index)" ng-show="!transaction.transaction.comment && !editingTransaction[$index]">no comment</div>
+						<div style="font-style: italic; font-size: 12px;" ng-click="editTransaction($index)" ng-show="transaction.transaction.comment && !editingTransaction[$index]" ng-bind-html="parseHashtags(transaction.transaction.comment) | to_trusted_html"></div>
 						<div ng-show="editingTransaction[$index]"><form novalidate>
 							<input style="width: 500px" type="text" ng-focus="editingTransaction[$index]" ng-model="transaction.transaction.comment"/>
 							<button ng-click="updateTransaction($index)">done</button>
@@ -57,4 +63,5 @@
 			</md-item-content>
 		</md-item>	
 	</md-list>
+	</md-card>
 </div>

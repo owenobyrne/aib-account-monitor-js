@@ -1,14 +1,14 @@
-var SelectRegularTransactionCtrl = function($scope, $modalInstance, RegularTransactions) {
+app.controller("SelectRegularTransactionCtrl", function($scope, $mdDialog, RegularTransactions) {
 
 	$scope.regularTransactionsForAccount = RegularTransactions.all();
 	
 	
 	$scope.assignRT = function(i) {
-		$modalInstance.close($scope.regularTransactionsForAccount[i]);
+		$mdDialog.hide($scope.regularTransactionsForAccount[i]);
 	};
 
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+	$scope.closeDialog = function() {
+		$mdDialog.cancel('cancel');
 	};
 
-};
+});

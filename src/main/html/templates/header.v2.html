@@ -1,0 +1,18 @@
+<div layout="horizontal">
+	<div flex>
+		<div>
+			<h3 ui-sref='application'>Online Banking</h3>
+		</div>
+	</div>
+
+	
+	<div flex>
+		<div style="float: right; padding: 5px;"><img style="height: 40px; width: 40px; border-radius: 50%; border: none;" ng-src="{{profile.person.image.url}}"></div> 
+		
+		<div style="float: right; padding: 5px 0px 0px 0px;">
+			<div style="font-size: 14pt; font-weight: 300;">{{profile.person.displayName}}</div> 
+			<div style=" padding-right: 3px; font-size: 8pt; text-decoration: underline; cursor: pointer;" ng-click="disconnect()">Logout</div>
+		</div> 
+	</div>
+
+</div>

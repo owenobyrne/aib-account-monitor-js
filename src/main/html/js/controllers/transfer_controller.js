@@ -1,4 +1,4 @@
-var TransferCtrl = function($scope, $modalInstance, accounts) {
+app.controller('TransferCtrl', function($scope, $mdDialog, accounts) {
 
 	$scope.transfer = {
 			fromAccount: accounts.from,
@@ -10,11 +10,11 @@ var TransferCtrl = function($scope, $modalInstance, accounts) {
 	};
 		
 	$scope.ok = function() {
-		$modalInstance.close($scope.transfer);
+		$mdDialog.hide($scope.transfer);
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$mdDialog.cancel('cancel');
 	};
 
-};
+});

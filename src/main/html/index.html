@@ -4,18 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Banking</title>
-<link
-	href='//fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,700,700italic,900&subset=latin'
-	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,600,300,700' rel='stylesheet' type='text/css'>
+
+
+
+
+<!-- default themes and core styles -->
+<link rel="stylesheet" href="js/modules/angular-material/angular-material.css">
+
+<link rel="stylesheet" href="js/modules/angular-material/themes/deep-orange-theme.css">
+
+<!-- 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" media="all" />
-
+ -->
+ 
 <style type="text/css">
 body {
-	font-smooth: always;
-	font-family: roboto;
-	-webkit-font-smoothing: antialiased;
-	background-color: #fafafa;
+	font-family: "Open Sans";
 }
 
 /* Some fixes for AngularUI Bootstrap */
@@ -83,16 +89,14 @@ body {
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<!-- script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-<script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/hammer.js/1.1.3/hammer.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-animate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-aria.min.js"></script>
+<script src="js/modules/angular-material/angular-material.js"></script>
 <script
 	src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-resource.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js" charset="UTF-8"></script>
 
@@ -117,10 +121,12 @@ body {
 <script src="js/controllers/login_controller.js"></script>
 <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDH1SOfsvsLhZwMY1KTsOoWtlQzI0D5Kio&v=3.exp&sensor=false"></script>
 </head>
-<body>
+<body layout="vertical">
 	<div ui-view="applicationview"></div>
 
 <script>
+
+
 var map;
 
 function initialize() {

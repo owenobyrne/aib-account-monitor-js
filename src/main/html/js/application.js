@@ -1,4 +1,4 @@
-angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRoute', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
+var app = angular.module('onlinebanking', ['onlinebankingServices', 'ngRoute', 'ngMaterial', 'ui.router', 'ngDragDrop', 'directive.g+signin', 'LocalStorageModule'])
 	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 
 	   function($stateProvider, $routeProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise("/login"); 
@@ -23,7 +23,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRou
 					// child view of accounts. (after the @ is the state name)
 					
 					"applicationview@": {
-						templateUrl: "templates/application.html",
+						templateUrl: "templates/application.v2.html",
 						controller: function(UserService) {
 							// see if there's an accesstoken in localstorage and recover it.
 							var at = UserService.getAccessToken();
@@ -38,7 +38,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRou
 						}
 					},
 					"headerview@application": {
-						templateUrl: "templates/header.html",
+						templateUrl: "templates/header.v2.html",
 						controller: HeaderCtrl						
 					},
 					"accountview@application": {
@@ -46,7 +46,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRou
 						controller: AccountListCtrl						
 					},
 					"mainview@application": {
-						templateUrl: "templates/transaction_list.html",
+						templateUrl: "templates/transaction_list.v2.html",
         				controller: TransactionListCtrl	
 					},
 					"rightview@application": { 
@@ -62,7 +62,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRou
 				url: "/accounts/:accountName/transactions",
 				views: {
 					"mainview@application": {
-						templateUrl: "templates/transaction_list.html",
+						templateUrl: "templates/transaction_list.v2.html",
         				controller: TransactionListCtrl	
 					}
 				}
@@ -74,7 +74,7 @@ angular.module('onlinebanking', ['onlinebankingServices', 'ui.bootstrap', 'ngRou
 				url: "/tags/:tag",
 				views: {
 					"mainview@application": {
-						templateUrl: "templates/transaction_list.html",
+						templateUrl: "templates/transaction_list.v2.html",
         				controller: TransactionListCtrl	
 					}
 				}
