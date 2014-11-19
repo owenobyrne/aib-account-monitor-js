@@ -1,5 +1,6 @@
 function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Accounts, Transactions) {
-
+	$scope.open = [];
+	
 	if ($stateParams.accountName != null) {
 		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
 		$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
@@ -16,6 +17,10 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	$scope.getTransferTransaction = function(t) {
 		// get an individual transaction                        
 		return {account: "testing"};
+	};
+	
+	$scope.isOpen = function(i) {
+		return ($scope.open[i] == null ? false : true);
 	};
 	
 	$scope.sameDate = function(i) {
