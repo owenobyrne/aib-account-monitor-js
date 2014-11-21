@@ -1,17 +1,19 @@
-<div layout="horizontal">
-	<div flex>
-		<div>
-			<h3 ui-sref='application'>Online Banking</h3>
-		</div>
+<div layout="horizontal" style="line-height: 56px; ">
+	<div flex-sm="20" flex-md="15">
+		<div ui-sref='application' style="margin-left: 12px; font-size: 20px;">Online Banking</div>
 	</div>
 
+	<div flex >
+		<div style="max-width: 720px; padding: 0 25px 0px 25px; margin-left: auto;  margin-right: auto;">
+			<input placeholder="Search" style="font-size: 16px; padding: 5px 10px 3px 10px; font-weight: 300; width: 100%; border: 0px; background: rgba(255, 255, 255, 0.3); color: white;"/>
+		</div>
+	</div>
 	
-	<div flex>
-		<div style="float: right; padding: 5px;"><img style="height: 40px; width: 40px; border-radius: 50%; border: none;" ng-src="{{profile.person.image.url}}"></div> 
+	<div  flex-sm="20" flex-md="15">
+		<div style="float: right;" ng-click="disconnect()"><img style="margin: 12px 12px; height: 32px; width: 32px; border-radius: 50%; border: none;" ng-src="{{profile.person.image.url}}"></div> 
 		
-		<div style="float: right; padding: 5px 0px 0px 0px;">
-			<div style="font-size: 14pt; font-weight: 300;">{{profile.person.displayName}}</div> 
-			<div style=" padding-right: 3px; font-size: 8pt; text-decoration: underline; cursor: pointer;" ng-click="disconnect()">Logout</div>
+		<div style="float: right;">
+			<div style="font-size: 16px; font-weight: 300;">{{profile.person.displayName}}</div> 
 		</div> 
 	</div>
 

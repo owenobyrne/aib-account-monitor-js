@@ -133,7 +133,7 @@ var app = angular.module('onlinebanking', ['onlinebankingServices', 'ngRoute', '
 	})
 	.directive('sparkline', function( /* dependencies */) {
 			var margin = {top: 3, right: 4, bottom: 3, left: 2},
-			    width = 200 - margin.left - margin.right,
+			    width = 180	 - margin.left - margin.right,
 			    height = 20 - margin.top - margin.bottom;
 
 			var x = d3.scale.linear()

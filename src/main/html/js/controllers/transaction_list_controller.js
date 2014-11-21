@@ -35,9 +35,24 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 
 	$scope.editTransaction = function(i) {
 		$scope.editingTransaction[i] = true;
+		scrollPage(2, 0, 50);
 		console.log("editing " + $scope.transactions[i].transaction.narrative + "...");
 	};
-
+	
+	scrollPage = function(scrollBy, sofar, until) {
+		window.scrollBy(0,scrollBy);
+		if (Math.abs(sofar) + Math.abs(scrollBy) < Math.abs(until)) {
+			setTimeout('scrollPage(' + scrollBy + ', ' + (scrollBy + sofar) + ', ' + until + ')',3);
+		}
+	}
+	
+	$scope.updateTransaction = function(i) {
+		Transactions.update({transactionId: $scope.transactions[i].transaction.transId}, $scope.transactions[i]);
+		$scope.editingTransaction[i] = false;
+		scrollPage(-5, 0, -50);
+		console.log("updating " + $scope.transactions[i].transaction.transId + "...");
+	};
+	
 	$scope.moveMap = function(i) {
 		$scope.selectedTransactionId = i;
 		console.log($scope.transactions[i].transaction.gps_coords);
@@ -71,13 +86,8 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 			);
 		});
 	};
-		
-	$scope.updateTransaction = function(i) {
-		Transactions.update({transactionId: $scope.transactions[i].transaction.transId}, $scope.transactions[i]);
-		$scope.editingTransaction[i] = false;
-		console.log("updating " + $scope.transactions[i].transaction.transId + "...");
-	};
 	
+
 	$scope.parseHashtags = function(comment) {
 		if (!comment) { return ""; }
 		return comment.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {

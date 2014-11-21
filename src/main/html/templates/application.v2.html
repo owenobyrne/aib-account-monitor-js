@@ -1,20 +1,21 @@
 <div>
-	<md-toolbar md-theme="deep-orange"  ui-view="headerview">
+	<md-toolbar md-theme="deep-orange" style=" height: 56px; min-height: 56px; z-index: 100; position: fixed; box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);" ui-view="headerview">
 	
 	</md-toolbar>
 	<div flex layout="vertical" layout-sm="horizontal">
-		<md-sidenav class="md-sidenav-left md-whiteframe-z2" flex-sm="20" flex-md="15" component-id="left" is-locked-open="true">
+		<md-sidenav style="margin-top: 56px; box-shadow: -2px 0 2px rgba(0,0,0,.1) inset; background: #dedede;" class="md-sidenav-left" 
+			flex-sm="20" flex-md="15" component-id="left" is-locked-open="true">
 			<div ui-view="accountview">
 		      Menu<br>
 		      [flex-sm="33"][flex-md="20"]
 		    </div>
 		</md-sidenav>
 		
-	    <main style="background: #ececec;" flex ui-view="mainview">
+	    <main style="margin-top: 56px; background: #ececec;" flex ui-view="mainview">
 	      Main [flex]
 	    </main>
 	    
-		<md-sidenav class="md-sidenav-right md-whiteframe-z2" flex-sm="20" flex-md="15" component-id="right" is-locked-open="true">
+		<md-sidenav style="margin-top: 56px;" class="md-sidenav-right md-whiteframe-z2" flex-sm="20" flex-md="15" component-id="right" is-locked-open="true">
 			<div ui-view="rightview">
 		      Menu<br>
 		      [flex-sm="33"][flex-md="20"]
