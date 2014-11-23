@@ -1,12 +1,10 @@
-<div id="accountPanels" ng-mouseover="showBalance=true" 
-	ng-mouseleave="showBalance=false" 
-	style="	padding: 10px 0 0 10px; 
-			width: 200px;">
+<div id="accountPanels" style="padding-top: 5px;" ng-mouseover="showBalance=true" ng-mouseleave="showBalance=false">
 			
 	<div ng-repeat="account in accounts" 
 		ng-animate="'fade'" 
-		id="{{$index}}"
+		id="account-{{$index}}"
 		class="accountPanel"
+		ng-class="{active: account.name == activeAccount}"
 		ng-model="fromAccount"
 		jqyoui-droppable="{
 			index: $index,
@@ -25,16 +23,17 @@
 					font-weight: 700; 
 					font-size: 13px; 
 					color: #555555;">
-			<a href="#/app/accounts/{{account.name}}/transactions"  style="color: #555555; text-decoration: none;">{{account.description}}</a>
+			<a ui-sref="application.transactions({accountName: account.name, position: $index})" style="color: #555555; text-decoration: none;">{{account.description}}</a>
 		</div>
-		<div>
+		<div ng-hide="showBalance" >
 			<sparkline accountbalance="account.balance" data="sparklines[account.name]"></sparkline>
 		</div>
-		<div id="{{$index}}" 
+		<div id="balance-{{$index}}" 
 			data-drag="true" 
 			jqyoui-draggable="{
 				index: $index,
-				placeholder: 'keep'
+				placeholder: 'keep',
+				containment: 'offset'
 			}"
 			ng-model="accounts"
 			data-jqyoui-options="{
@@ -44,14 +43,12 @@
 			ng-show="showBalance" 
 			ng-animate="'fade'" 
 			ng-class="{canTransferFrom: accounts[$index].canTransferFrom}" 
-			style="	background-color: rgba(255, 255, 255,0.9); 
-					position: relative;  
-					font-weight: 700;
+			style="position: relative;  
 					font-size: 18px; 
 					padding-left: 5px; 
-					line-height: 30px; 
-					height: 30px; 
-					margin-top: -30px; 
+					line-height: 25px; 
+					height: 25px; 
+					margin-right: 5px;
 					text-align: left;" >
 			
 			<div style="float: left; width: 150px; height: 25px;">
@@ -72,5 +69,6 @@
 			$('#accountPanels').$scope().fnfn(el);
 		}
 	</script>
+	
 	<div id="arrow"></div>
 </div>

@@ -39,6 +39,7 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	
 	var getTransferTransaction = function(transId, i) {
 		Transactions.get({transactionId: transId}, function(t) {
+			t.injected = true;
 			$scope.transactions[i] = t;
 		});
 	}

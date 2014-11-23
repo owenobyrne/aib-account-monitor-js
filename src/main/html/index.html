@@ -44,16 +44,19 @@ body {
 }
 
 .accountPanel {
-	
+	margin: 0 2px 0 -10px;
+	border-bottom: 1px solid #ccc;
+	padding: 2px 0px 10px 15px;
 }
 
 .accountPanel.highlight {
-	border: 1px solid red;
-	border-bottom-width: 2px;
+	background-color: #e0dca1 !important;
 }
 .accountPanel.hover {
-	border: 1px solid green;
-	border-bottom-width: 2px;
+	background-color: #f1f0d6 !important;
+}
+.accountPanel.active {
+	background-color: #f0f0f0;
 }
 
 .fade-show.fade-show-active {
@@ -98,9 +101,13 @@ body {
 #arrow {
 	height: 40px;
 	position: absolute;
-	right: 0;
-	top: 0;
-	transform: translate3d(0,400px,0);
+	opacity: 0;
+	right: 0px;
+	top: 0px;
+	-webkit-transition: all .3s ease-in-out;
+	-moz-transition: all .3s ease-in-out;
+	-o-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out;
 }
 
 #arrow:before {
@@ -140,11 +147,12 @@ body {
 <script src="js/libs/base64.js"></script>
 <script	src="js/modules/angular-localstorage.js"></script>
 <script	src="js/modules/angular-ui-router-0.2.11.js"></script>
-<script src="js/modules/angular-dragdrop-1.0.3.js"></script>
+<script src="js/modules/angular-dragdrop-1.0.8.js"></script>
 <script src="js/modules/angular-google-plus-signin.js"></script>
 <script src="js/services.js"></script>
 <script src="js/application.js"></script>
 <script src="js/controllers/header_controller.js"></script>
+<script src="js/controllers/application_controller.js"></script>
 <script src="js/controllers/account_list_controller.js"></script>
 <script src="js/controllers/transaction_list_controller.js"></script>
 <script src="js/controllers/regular_transaction_list_controller.js"></script>

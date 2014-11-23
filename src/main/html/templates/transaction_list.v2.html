@@ -5,6 +5,8 @@
 .redamount { color: #ff0000; }
 .transferin {  margin: -22px -20px 5px 0; }
 .transferout {  margin: 5px 0 0 -20px; }
+.item-injected { background: #f0f0f0; }
+.item-not-injected { background: #fff; }
 </style>
 
 <div id="transactionList" style="max-width: 720px; padding: 0 30px 20px 30px; margin-left: auto;  margin-right: auto;">
@@ -48,7 +50,7 @@
       		<div ng-animate="'fade'" ng-mouseenter="showMenu=true" ng-mouseleave="showMenu=false" ng-init="showMenu=false" 
           			  ng-class="{'item-open': editingTransaction[$index], transferin:transType(transaction)=='transfer-in', transferout:transType(transaction)=='transfer-out'}" class="posted-item">
           			 
-				<md-item-content style="position: relative;  background: white;" ng-hide="editingTransaction[$index]" ng-click="editTransaction($index)">
+				<md-item-content ng-class="{'item-injected': transaction.injected, 'item-not-injected': !transaction.injected}" style="position: relative;" ng-hide="editingTransaction[$index]" ng-click="editTransaction($index)">
           			<div style=" position: absolute; top: 0; bottom: 0; left:0; right: 0; box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);"></div>
 	          		<div class="md-tile-left">
 		          		<center>
@@ -78,7 +80,7 @@
 					<div style="font-size: 13px; padding: 8px 16px; position: relative;" class="md-tile-content">
 						<div layout="horizontal" layout-align="space-between">
 							<div>
-								<span ng-show='!$stateParams.accountName'>{{transaction.transaction.account}} &ndash; </span>
+								<span ng-show='!$stateParams.accountName || transaction.injected'>{{transaction.transaction.account}} &ndash; </span>
 								<span style="font-weight: 700;" ng-click="moveMap($index)">{{transaction.transaction.narrative}}</span> 
 								<small><em class="muted">{{transaction.transaction.subNarrative}}</em></small>
 								<small><em ng-show="showMenu" class="muted"><a ng-click="markAsRegularTransaction($event, $index)" href>Mark as a Regular Transaction</a></em></small>

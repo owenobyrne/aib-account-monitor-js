@@ -18,24 +18,25 @@ var app = angular.module('onlinebanking', ['onlinebankingServices', 'ngRoute', '
 			})
 			.state('application', {
 				url: "/app", 
+				onEnter: function(UserService) {
+					// see if there's an accesstoken in localstorage and recover it.
+					var at = UserService.getAccessToken();
+					if (at != '') {
+						// see if there's a profile...
+						var profile = UserService.getProfile();
+						
+						UserService.setProfile(profile);
+						UserService.setAccessToken(at);
+							
+					}
+				},
 				views: {
 					// the @ signifies that this view is in the rootview rather than a 
 					// child view of accounts. (after the @ is the state name)
 					
 					"applicationview@": {
 						templateUrl: "templates/application.v2.html",
-						controller: function(UserService) {
-							// see if there's an accesstoken in localstorage and recover it.
-							var at = UserService.getAccessToken();
-							if (at != '') {
-								// see if there's a profile...
-								var profile = UserService.getProfile();
-								
-								UserService.setProfile(profile);
-								UserService.setAccessToken(at);
-									
-							}
-						}
+						controller: ApplicationCtrl
 					},
 					"headerview@application": {
 						templateUrl: "templates/header.v2.html",
