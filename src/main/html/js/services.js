@@ -55,6 +55,10 @@ angular.module('onlinebankingServices', ['ngResource'])
     })
     .factory('Transactions', function($resource){
 		return $resource(serviceEndpoint + '/transactions/:transactionId:transactionType:search/:action:tag', {}, {
+			get: {
+				method:'GET',
+				params: {transactionId:"@transactionId"}
+			},
 			update: {
 				method:'PUT',
 				params: {transactionId:"@transactionId"}

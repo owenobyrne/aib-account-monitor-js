@@ -1,8 +1,33 @@
 function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Accounts, Transactions) {
 	$scope.open = [];
+	$scope.transactions = [];
 	
 	if ($stateParams.accountName != null) {
-		$scope.transactions = Accounts.transactions({accountName: $stateParams.accountName});
+		Accounts.transactions({accountName: $stateParams.accountName}, function(trans) {
+			var i=0;
+			
+			trans.forEach(function(t) {
+				// if it's a transfer in, get the outbound transfer and push it onto the stack of transactions first.
+				if ((t.transaction.transferTransId != null) &&  (!t.transaction.isDR)) {
+					$scope.transactions.push({});
+					console.log("need t0 get trans " + t.transaction.transferTransId);
+					getTransferTransaction(t.transaction.transferTransId, i);
+					i++;
+				}
+			
+				$scope.transactions.push(t);
+				i++;
+			
+				// if it's a transfer out, get the other side and push it onto the transactions stack afterwards.
+				if ((t.transaction.transferTransId != null) &&  (t.transaction.isDR)) {
+					$scope.transactions.push({});
+					console.log("need t0 get trans " + t.transaction.transferTransId);
+					getTransferTransaction(t.transaction.transferTransId, i);
+					i++;
+				}
+			});
+		});
+		
 		$scope.pendingtransactions = Accounts.pendingtransactions({accountName: $stateParams.accountName});
 	} else if ($stateParams.tag != null) {
 		$scope.transactions = Transactions.taggedtransactions({tag: $stateParams.tag});
@@ -12,12 +37,13 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 		$scope.pendingtransactions = Transactions.pendingtransactions();	
 	}
 	
-	$scope.selectedTransactionId = "";
+	var getTransferTransaction = function(transId, i) {
+		Transactions.get({transactionId: transId}, function(t) {
+			$scope.transactions[i] = t;
+		});
+	}
 	
-	$scope.getTransferTransaction = function(t) {
-		// get an individual transaction                        
-		return {account: "testing"};
-	};
+	$scope.selectedTransactionId = "";
 	
 	$scope.isOpen = function(i) {
 		return ($scope.open[i] == null ? false : true);
@@ -51,6 +77,34 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 		$scope.editingTransaction[i] = false;
 		scrollPage(-5, 0, -50);
 		console.log("updating " + $scope.transactions[i].transaction.transId + "...");
+	};
+	
+	$scope.transType = function(transaction) {
+		if (transaction.transaction.narrative.indexOf("VDP") > -1) {
+			return "card";
+		} else if (transaction.transaction.narrative.indexOf("VDC") > -1) {
+			return "tap";
+		} else if (transaction.transaction.narrative.indexOf("VDP") > -1) {
+			return "card";
+		} else if (transaction.transaction.amount == 0) {
+			return "info";
+		} else if (transaction.transaction.transferTransId != null) {
+			if (transaction.transaction.isDR) {
+				return "transfer-out";				
+			} else {
+				return "transfer-in";
+			}
+		} else if (transaction.transaction.narrative.indexOf("Realex Financial S") > -1) {
+			return "salary";
+		} else if (transaction.transaction.narrative.match(/500\d\d\d/)) {
+			return "cheque";
+		} else if (transaction.regularTransaction != null) {
+			return "regular";
+		} else if ((transaction.transaction.narrative.indexOf("VDA") > -1) || (transaction.transaction.narrative.indexOf("ATM") > -1)) {
+			return "atm";
+		} 
+		
+		return "";
 	};
 	
 	$scope.moveMap = function(i) {
@@ -88,12 +142,19 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	};
 	
 
-	$scope.parseHashtags = function(comment) {
+	$scope.parseHashTagsAndURLs = function(comment) {
 		if (!comment) { return ""; }
-		return comment.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+		
+		comment = comment.replace(/(\b(?:(https?|ftp):\/\/)?((?:www\d{0,3}\.)?([a-z0-9.-]+\.(?:[a-z]{2,4}|museum|travel)(?:\/[^\/\s]+)*))\b)/i, function(t) {
+			return t.link(t);
+		});
+		
+		comment = comment.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
 			var tag = t.replace("#","");
 			return t.link("#/app/tags/"+tag);
 		});
+		
+		return comment;
 	};
 
 	$scope.convertHexToDouble = function(hex) {
