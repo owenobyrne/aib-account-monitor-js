@@ -1,6 +1,33 @@
-function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Accounts, Transactions) {
+function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Accounts, Transactions, RegularTransactions, UserService, Reports) {
 	$scope.open = [];
 	$scope.transactions = [];
+	$scope.nextPayDay = UserService.getPayDate();
+	
+	$scope.regularTransactions = RegularTransactions.all();
+	$scope.regularTransactionsForThisAccount = [];
+	$scope.remainingBalance = 0;
+	$scope.totalUpcoming = 0;
+	$scope.percentUsed = 0;
+	
+	Reports.run({reportName:"regularTransactionsBeforeNextPayDay"}, function(rt) {
+		$scope.upcomingRegularTransactions = rt;
+		
+		var accountToCheck = $stateParams.accountName ? $stateParams.accountName : "CURRENT-358";
+		Accounts.details({accountName: accountToCheck}, function(account) { 
+			$scope.billsAccount = account;
+			
+			rt.forEach(function(t) {
+				if (t.account == account.name) { 
+					$scope.regularTransactionsForThisAccount.push(t);
+					$scope.totalUpcoming += t.amount;
+				}
+			});
+			
+			$scope.remainingBalance = account.balance - $scope.totalUpcoming;
+			$scope.percentUsed = ($scope.totalUpcoming / account.balance) * 100;
+		});
+	});
+	
 	
 	if ($stateParams.accountName != null) {
 		Accounts.transactions({accountName: $stateParams.accountName}, function(trans) {
@@ -45,6 +72,10 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	}
 	
 	$scope.selectedTransactionId = "";
+	
+	$scope.beforeNextPayDay = function(rt) {
+		return new Date(rt.nextDate) < UserService.getPayDate();
+	};
 	
 	$scope.isOpen = function(i) {
 		return ($scope.open[i] == null ? false : true);

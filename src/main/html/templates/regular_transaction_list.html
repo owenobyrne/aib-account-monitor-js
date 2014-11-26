@@ -19,16 +19,7 @@
 		}
 	</script>
 	<span ng-click="refreshFromAIB()">Websocket stuff:</span>
-	<table class="table table-condensed">
-		<tr ng-repeat="rtransaction in regularTransactions | filter:beforeNextPayDay">
-			<td>{{rtransaction.description}} {{dueDate(rtransaction)}}</td>
-			<td style="text-align: right">{{rtransaction.amount | number:2}}</td>
-		</tr>
-		<tr>
-			<td><strong>Remaining:</strong></td>
-			<td style="text-align: right"><strong>{{remainingBalance | number:2 }}</strong></td>
-		</tr>
-	</table>
+	
 	<p>
 		<div>
 		<div ng-repeat="rtransaction in regularTransactions"  ng-class="{nextpayday:!beforeNextPayDay(rtransaction)}">

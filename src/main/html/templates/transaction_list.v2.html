@@ -7,9 +7,70 @@
 .transferout {  margin: 5px 0 0 -20px; }
 .item-injected { background: #f0f0f0; }
 .item-not-injected { background: #fff; }
+
+#transactionList {
+	max-width: 720px; 
+	padding: 0 30px 20px 30px; 
+	margin-left: auto;  
+	margin-right: auto;
+}
+
+@media screen and (max-width: 360px) {
+	#transactionList {
+		padding: 0 5px 20px 5px; 
+	}
+	
+} 
 </style>
 
-<div id="transactionList" style="max-width: 720px; padding: 0 30px 20px 30px; margin-left: auto;  margin-right: auto;">
+<div id="transactionList">
+
+<!-- UPCOMING TRANSACTIONS -->
+
+
+	<div ng-show="regularTransactionsForThisAccount.length > 0">
+	<md-subheader style="background-color: transparent; padding-bottom: 6px; font-weight: 700;">Upcoming Transactions before next Pay Day</md-subheader>
+		
+		<md-list style="position: relative;">
+		
+	      	<md-item style="position: relative; color: #999;">
+				<div class="posted-item">
+					<md-item-content  style="position: relative;  background: white;" >
+						<div style=" position: absolute; top: 0; bottom: -3px; left:0; right: 0; box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);"></div>
+		          		<div class="md-tile-left" style="width: 30px; padding-top: 3px;">
+							<center>
+								<img style="width: 16px; height: 16px; opacity: 0.4;" src="data:image/png;base64,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"/>
+							</center>
+						</div>
+						<div style="font-size: 13px; padding: 12px 16px; position: relative;" class="md-tile-content">
+							<div layout="horizontal" layout-align="space-between">
+								<div flex style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 20px;">
+									<span style="font-weight: 700;" ng-repeat="rtransaction in regularTransactionsForThisAccount | filter:beforeNextPayDay">{{rtransaction.description}}, </span>
+								</div>
+								<div> 
+									{{totalUpcoming | number:2}} <small>DR</small>
+								</div>
+							</div>
+						</div>	
+					</md-item-content>
+				</div>
+				<div style="height: 3px; background-color: lime; margin: 0 -5px;">
+					<div style="height: 3px; background-color: orange; width: {{percentUsed}}%;"></div>
+				</div>
+	      </md-item>
+	      <md-item>
+	      	<md-item-content>
+	      		<div  layout="row" layout-align="end center" style="width: 100%; background: #aaa; border-radius: 0 0 2px 2px; box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);">
+	      			<div style="padding: 2px 11px; font-size: 12px; color: #eee; font-style: italic;">&euro;{{remainingBalance | number:2}} to spare</div>
+	      		</div>
+			</md-item-content>
+		</md-item>	
+		</md-list>
+	</div>
+
+<!-- PENDING TRANSACTIONS -->
+
+
 	<div ng-show="pendingtransactions.length > 0">
 	<md-subheader style="background-color: transparent; padding-bottom: 6px; font-weight: 700;">Pending Transactions</md-subheader>
 		
@@ -43,6 +104,8 @@
 	      </md-item>	
 		</md-list>
 	</div>
+	
+	<!-- POSTED TRANSACTIONS -->
 	
 	<md-subheader style="background-color: transparent; padding-bottom: 6px; font-weight: 700;">Transactions</md-subheader>
 	<md-list style="position: relative;" >
