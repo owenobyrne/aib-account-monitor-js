@@ -15,13 +15,21 @@ function RegularTransactionListCtrl($scope, $routeParams, $stateParams, $q, User
 	};
 	
 	
-	var socket = new SockJS('/aibaccountmonitor/websockets/portfolio');
+	var socket = new SockJS('http://payb.in/aibaccountmonitor/websockets/portfolio');
     var stompClient = Stomp.over(socket);
+    
+    stompClient.debug = function(str) {
+        // append the debug log to a #debug div somewhere in the page using JQuery:
+        //console.log(str);
+    };
+      
     stompClient.connect({}, function(frame) {
         console.log('Connected ');
         console.log(frame);
         
-        stompClient.subscribe("/greeting", function(message) {
+        stompClient.send("/app/greeting", {priority: 9}, "Hello, STOMP");
+        
+        stompClient.subscribe("/topic/greeting", function(message) {
         	console.log(message.body);
         });
         

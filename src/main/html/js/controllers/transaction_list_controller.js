@@ -82,7 +82,8 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	};
 	
 	$scope.sameDate = function(i) {
-		if (i > 0 && $scope.transactions[i].transaction.transDate == $scope.transactions[i-1].transaction.transDate) {
+		// only continue if the transactions array has been resolved.
+		if ($scope.transactions.$resolved && i > 0 && $scope.transactions[i].transaction.transDate == $scope.transactions[i-1].transaction.transDate) {
 			return true;
 		} else {
 			return false;
