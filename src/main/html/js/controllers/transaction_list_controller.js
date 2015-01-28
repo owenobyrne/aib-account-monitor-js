@@ -113,6 +113,8 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 	};
 	
 	$scope.transType = function(transaction) {
+		if (!$scope.transactions.$resolved) { return; }
+		
 		if (transaction.transaction.narrative.indexOf("VDP") > -1) {
 			return "card";
 		} else if (transaction.transaction.narrative.indexOf("VDC") > -1) {

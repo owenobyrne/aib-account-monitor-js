@@ -33,7 +33,7 @@
 				<configuration>
 					<url>http://payb.in/manager/text</url>
 					<server>TomcatServerOnMiller</server>
-					<warFile>C:/Owen/git/aib-account-monitor-js/target/${project.build.finalName}.war</warFile>
+					<warFile>target/${project.build.finalName}.war</warFile>
 					<path>/</path>
 				</configuration>
 			</plugin>
