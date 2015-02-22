@@ -129,7 +129,7 @@ function TransactionListCtrl($scope, $routeParams, $stateParams, $mdDialog, Acco
 			} else {
 				return "transfer-in";
 			}
-		} else if (transaction.transaction.narrative.indexOf("Realex Financial S") > -1) {
+		} else if (transaction.transaction.narrative.toLowerCase().indexOf("realex financial s") > -1) {
 			return "salary";
 		} else if (transaction.transaction.narrative.match(/500\d\d\d/)) {
 			return "cheque";
